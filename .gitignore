@@ -1,0 +1,7 @@
+compile/
+log/
+library.cfg
+*.asdb
+*.awc
+*.bak
+*.tmp

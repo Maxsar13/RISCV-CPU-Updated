@@ -1,0 +1,60 @@
+[Project]
+Current Flow=Generic
+VCS=0
+version=4
+Current Config=compile
+[Configurations]
+compile=compressed_riscv
+[Library]
+compressed_riscv=.\compressed_riscv\compressed_riscv.lib
+[$LibMap$]
+compressed_riscv=.
+Active_lib=
+[Settings]
+FLOW_TYPE=HDL
+LANGUAGE=VERILOG
+REFRESH_FLOW=1
+FLOWTOOLS=NONE
+FAMILY=
+[Files]
+/rv32_alu_core.sv=-1
+/rv32_branch_core.sv=-1
+/rv32_regfile.sv=-1
+/rv32_decoder.sv=-1
+/if_id_reg.sv=-1
+/id_ex_reg.sv=-1
+/ex_mem_reg.sv=-1
+/mem_wb_reg.sv=-1
+/if_stage.sv=-1
+/id_stage.sv=-1
+/ex_stage.sv=-1
+/mem_stage.sv=-1
+/wb_stage.sv=-1
+/hazard_unit.sv=-1
+/fowarding_unit.sv=-1
+/rv32_pipeline_control.sv=-1
+/cpu_top.sv=-1
+/definitions.vh=-1
+[Files.Data]
+.\src\rv32_alu_core.sv=SystemVerilog Source Code
+.\src\rv32_branch_core.sv=SystemVerilog Source Code
+.\src\rv32_regfile.sv=SystemVerilog Source Code
+.\src\rv32_decoder.sv=SystemVerilog Source Code
+.\src\if_id_reg.sv=SystemVerilog Source Code
+.\src\id_ex_reg.sv=SystemVerilog Source Code
+.\src\ex_mem_reg.sv=SystemVerilog Source Code
+.\src\mem_wb_reg.sv=SystemVerilog Source Code
+.\src\if_stage.sv=SystemVerilog Source Code
+.\src\id_stage.sv=SystemVerilog Source Code
+.\src\ex_stage.sv=SystemVerilog Source Code
+.\src\mem_stage.sv=SystemVerilog Source Code
+.\src\wb_stage.sv=SystemVerilog Source Code
+.\src\hazard_unit.sv=SystemVerilog Source Code
+.\src\fowarding_unit.sv=SystemVerilog Source Code
+.\src\rv32_pipeline_control.sv=SystemVerilog Source Code
+.\src\cpu_top.sv=SystemVerilog Source Code
+.\src\definitions.vh=SystemVerilog Source Code
+[HierarchyViewer]
+HierarchyInformation=
+ShowHide=ShowTopLevel
+Selected=

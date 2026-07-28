@@ -1,0 +1,11 @@
+[Version]
+Version=15.0
+[Designs]
+compressed_riscv=.\compressed_riscv\compressed_riscv.adf
+[Browser]
+sort=order
+mode=none
+[Order]
+order=1
+[Expand]
+compressed_riscv=1
