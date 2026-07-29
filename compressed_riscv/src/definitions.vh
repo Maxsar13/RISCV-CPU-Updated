@@ -51,5 +51,9 @@
 `define RES_PC4 2'd2 
 
 //Counters
+`define COUNTER_BASE 32'hFFFF_FFF0
+`define CYCLE_COUNT 32'hFFFF_FFF4
+`define STALL_COUNT 32'hFFFF_FFF8
+`define INSTR_COUNT 32'hFFFF_FFFC
 
 `endif
