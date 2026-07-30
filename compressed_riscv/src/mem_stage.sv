@@ -23,7 +23,12 @@ module mem_stage(
 	
 	//valid mem op
 	
-	logic dmem_active = valid_in && (mem_read_in || mem_write_in) && !trap_in;
+	logic dmem_active;
+	assign dmem_active = valid_in && (mem_read_in || mem_write_in) && !trap_in;
+	
+	logic is_perf;
+	assign is_perf = dmem_active && ((alu_result_in[31:4] == 32'hFFFF_FFF0) == `COUNTER_BASE);  
+	
 	//Dmem request
 	assign dmem_req_valid = dmem_active;
 	assign dmem_req_write = mem_write_in;
