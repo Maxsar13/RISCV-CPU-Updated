@@ -1,4 +1,4 @@
-timestamp=1785445560489
+timestamp=1785449796635
 
 [~A]
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/cpu_top.sv=0*70139*74534
@@ -11,7 +11,7 @@ E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/id_ex_re
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/id_stage.sv=0*26122*27109
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/if_id_reg.sv=0*9630*10250
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/if_stage.sv=0*28314*29173
-E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/mem_stage.sv=0*77079*78580
+E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/mem_stage.sv=0*79960*81589
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/mem_wb_reg.sv=0*16294*17123
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/rv32_alu_core.sv=0*1465*2185
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/rv32_branch_core.sv=0*3160*3803
@@ -20,19 +20,19 @@ E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/rv32_pip
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/rv32_regfile.sv=0*4840*5575
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/wb_stage.sv=0*21796*22479
 LastVerilogToplevel=cpu_top
-ModifyID=27
+ModifyID=28
 Version=74
 
 [~MFT]
-0=6|0compressed_riscv.mgf|78580|31572
-1=4|1compressed_riscv.mgf|181155|120441
-3=8|3compressed_riscv.mgf|72164|32111
+0=6|0compressed_riscv.mgf|81589|33622
+1=4|1compressed_riscv.mgf|186956|126242
+3=8|3compressed_riscv.mgf|79884|39544
 
 [$root]
-A/$root=22|||1*180781
-BinW64/$root=3*68211
-SLP=3*68326
-Version=15.0.261.9132 (Windows64)|0000000b789cd3f53752d02d2e33ca3634070010af02ea|c73a565f2ade592f8ac1c68f484c9216ed7bf42905f818e74afdf59f05586610
+A/$root=22|||1*186582
+BinW64/$root=3*75644
+SLP=3*75759
+Version=15.0.261.9132 (Windows64)|0000000b789cd3f53752d02d2e33ca3634070010af02ea|c73a565f2ade592f8ac1c68f484c92163c25b4ab9bbe7b80053d8370cf1699ef
 
 [cpu_top]
 A/cpu_top=22|../src/cpu_top.sv|3|1*161376
@@ -98,11 +98,11 @@ SLP=3*31352
 Version=15.0.261.9132 (Windows64)|0000000b789cd3f53752d02d2e33ca3634070010af02ea|aea966a050ed7213625cc19bf475c99d9dc5b99f766d89beef52f8a7e86d62940da0d0640a21600028e1b061207371f4
 
 [mem_stage]
-A/mem_stage=22|../src/mem_stage.sv|3|1*181155
-BinW64/mem_stage=3*68394
+A/mem_stage=22|../src/mem_stage.sv|3|1*186956
+BinW64/mem_stage=3*75827
 R=../src/mem_stage.sv|3
-SLP=3*72164
-Version=15.0.261.9132 (Windows64)|0000000b789cd3f53752d02d2e33ca3634070010af02ea|a9ed948b187ff9fd40bb61f7b1b116611abc7d99fa60964a20020dd4f6612656a971fcd9e357604c942075052dd79bdb
+SLP=3*79884
+Version=15.0.261.9132 (Windows64)|0000000b789cd3f53752d02d2e33ca3634070010af02ea|a9ed948b187ff9fd40bb61f7b1b116611abc7d99fa60964a20020dd4f6612656d7e081013d8ef5dcabab862786cbea97
 
 [mem_wb_reg]
 A/mem_wb_reg=22|../src/mem_wb_reg.sv|1|1*21985
@@ -154,7 +154,7 @@ SLP=3*28183
 Version=15.0.261.9132 (Windows64)|0000000b789cd3f53752d02d2e33ca3634070010af02ea|2b7475f35b8a8842cc38c31e13c48d0b0bafa52c4e5082916fa00306e52ea5eda546ec6c0188dcbd8d8a83e1d647ace3
 
 [~U]
-$root=12|0*76276|
+$root=12|0*79129|
 cpu_top=12|0*69619||0x10
 ex_mem_reg=12|0*13615||0x10
 ex_stage=12|0*35909||0x10
@@ -164,7 +164,7 @@ id_ex_reg=12|0*11029||0x10
 id_stage=12|0*25644||0x10
 if_id_reg=12|0*9350||0x10
 if_stage=12|0*27951||0x10
-mem_stage=12|0*76570|
+mem_stage=12|0*79423|
 mem_wb_reg=12|0*15848||0x10
 rv32_alu_core=12|0*1233||0x10
 rv32_branch_core=12|0*2920||0x10

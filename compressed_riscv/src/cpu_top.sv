@@ -20,6 +20,10 @@ module cpu_top #(
     input  logic        dmem_req_ready,
     input  logic        dmem_resp_valid,
     input  logic [31:0] dmem_resp_rdata,
+	input logic [31:0] cycle_count,
+	input logic [31:0] instr_count,
+	input logic [31:0] stall_count,
+	
 
     output logic [31:0] pc_debug,
     output logic [31:0] instr_debug,
@@ -380,6 +384,9 @@ module cpu_top #(
         .dmem_req_ready(dmem_req_ready),
         .dmem_resp_valid(dmem_resp_valid),
         .dmem_resp_rdata(dmem_resp_rdata),
+		.cycle_count(cycle_count),
+		.instr_count(instr_count),
+		.stall_count(stall_count),
         .dmem_req_valid(dmem_req_valid),
         .dmem_req_write(dmem_req_write),
         .dmem_req_addr(dmem_req_addr),
@@ -433,13 +440,16 @@ module cpu_top #(
 
     // halt/trap state
     always @(posedge clk or posedge rst) begin
-        if (rst) begin
+        if (rst) 
+			begin
             // reset status
             halted <= 1'b0;
             trap <= 1'b0;
             trap_pc <= 32'd0;
             retired_debug <= 32'd0;
-        end else if (!memory_stall) begin
+        	end 
+		else if (!memory_stall) 
+			begin
             // commit count
             if (mem_wb_valid_q && !mem_wb_trap_q && !mem_wb_halt_q)
                 retired_debug <= retired_debug + 32'd1;
@@ -447,11 +457,13 @@ module cpu_top #(
             if (mem_wb_valid_q && mem_wb_halt_q)
                 halted <= 1'b1;
             // stop on trap
-            if (mem_wb_valid_q && mem_wb_trap_q) begin
+            if (mem_wb_valid_q && mem_wb_trap_q) 
+				begin
                 halted <= 1'b1;
                 trap <= 1'b1;
                 trap_pc <= mem_wb_pc_q;
-            end
-        end
+            	end
+        	end	
+		cycle_count <= cycle_count + 1'd1;	
     end
 endmodule

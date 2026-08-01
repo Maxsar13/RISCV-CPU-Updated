@@ -10,7 +10,10 @@ module mem_stage(
 	input logic trap_in,
 	input logic dmem_req_ready,
 	input logic dmem_resp_valid,
-	input logic [31:0] dmem_resp_rdata,
+	input logic [31:0] dmem_resp_rdata,	
+	input logic [31:0] cycle_count,
+	input logic [31:0] instr_count,
+	input logic [31:0] stall_count,
 	
 	output logic dmem_req_valid,
 	output logic dmem_req_write,
@@ -27,21 +30,40 @@ module mem_stage(
 	assign dmem_active = valid_in && (mem_read_in || mem_write_in) && !trap_in;
 	
 	logic is_perf;
-	assign is_perf = dmem_active && ((alu_result_in[31:4] == 32'hFFFF_FFF0) == `COUNTER_BASE);  
+	assign is_perf = dmem_active && ((alu_result_in[31:4] == 32'hFFFF_FFF0) == `COUNTER_BASE);  //Seperate check as when we access perf counters we're not accessing real memory 
 	
 	//Dmem request
-	assign dmem_req_valid = dmem_active;
+	assign dmem_req_valid = dmem_active && !is_perf;  //Making sure dmem_req_valid is set if we are accessing memory
 	assign dmem_req_write = mem_write_in;
 	assign dmem_req_addr = alu_result_in;
 	//store formatting
 	assign dmem_req_wdata = store_wdata(alu_result_in, store_data_in, funct3_in);
-	assign dmem_req_wstrb = store_wstrb(alu_result_in, funct3_in, mem_write_in);
-	
-	//Load formatting
-	assign mem_data_out = load_data(alu_result_in, dmem_resp_rdata, funct3_in);
+	assign dmem_req_wstrb = store_wstrb(alu_result_in, funct3_in, mem_write_in); 
 	
 	//load wait
-	assign memory_stall = dmem_active && !(dmem_req_ready && (mem_write_in || dmem_resp_valid));
+	assign memory_stall = dmem_active && !(dmem_req_ready && (mem_write_in || dmem_resp_valid)) && !is_perf; //Making sure stall isn't active if we are accessing perf counters
+	
+	//Load formatting 
+	
+	always_comb
+	begin //Performance counters
+		if(is_perf)
+			begin
+				case(alu_result_in[3:2])
+					2'b01: mem_data_out = cycle_count;
+					2'b10: mem_data_out = stall_count;
+					2'b11: mem_data_out = instr_count;
+					default: mem_data_out = 32'd0; 
+				endcase
+			end
+
+		else  
+			begin
+				mem_data_out = load_data(alu_result_in, dmem_resp_rdata, funct3_in); 
+			end
+	end
+		
+	
 	
 	//store strobes
 	function [3:0] store_wstrb;
