@@ -68,7 +68,7 @@ Status=Compiled
 [COMPILESTATUS|.\src\cpu_top.sv]
 FileTimeLow=2044345344
 FileTimeHigh=31270161
-Status=Modified
+Status=Compiled
 [COMPILESTATUS|.\src\rv32_pipeline_control.sv]
 FileTimeLow=3814482176
 FileTimeHigh=31267719
