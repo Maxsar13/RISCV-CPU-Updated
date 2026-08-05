@@ -20,9 +20,7 @@ module cpu_top #(
     input  logic        dmem_req_ready,
     input  logic        dmem_resp_valid,
     input  logic [31:0] dmem_resp_rdata,
-	input logic [31:0] cycle_count,
-	input logic [31:0] instr_count,
-	input logic [31:0] stall_count,
+
 	
 
     output logic [31:0] pc_debug,
@@ -113,7 +111,13 @@ module cpu_top #(
     logic        ex_mem_mem_write_q;
     logic [1:0]  ex_mem_result_sel_q;
     logic        ex_mem_trap_q;
-    logic        ex_mem_halt_q;
+    logic        ex_mem_halt_q;	
+	
+	
+	//Counters
+	logic [31:0] cycle_count;
+	logic [31:0] instr_count;
+	logic [31:0] stall_count;
 
     // EX/MEM bypass value
     logic [31:0] ex_mem_forward_value =
@@ -447,23 +451,38 @@ module cpu_top #(
             trap <= 1'b0;
             trap_pc <= 32'd0;
             retired_debug <= 32'd0;
+			//Resetting counters
+			stall_count <= 32'd0;  
+			cycle_count <= 32'd0;
+			instr_count <= 32'd0;
         	end 
-		else if (!memory_stall) 
+		else
 			begin
-            // commit count
-            if (mem_wb_valid_q && !mem_wb_trap_q && !mem_wb_halt_q)
-                retired_debug <= retired_debug + 32'd1;
-            // stop on halt
-            if (mem_wb_valid_q && mem_wb_halt_q)
-                halted <= 1'b1;
-            // stop on trap
-            if (mem_wb_valid_q && mem_wb_trap_q) 
-				begin
-                halted <= 1'b1;
-                trap <= 1'b1;
-                trap_pc <= mem_wb_pc_q;
-            	end
-        	end	
-		cycle_count <= cycle_count + 1'd1;	
+				cycle_count <= cycle_count + 32'd1;	
+				
+				if(memory_stall)
+					begin
+						stall_count <= stall_count + 32'd1;	 //If memory stalled, increment
+					end
+				else
+					begin
+            		// commit count
+            			if (mem_wb_valid_q && !mem_wb_trap_q && !mem_wb_halt_q)
+							begin
+                				retired_debug <= retired_debug + 32'd1;
+								instr_count <= instr_count + 32'd1; //INcrementing instruction counter 
+							end
+            		// stop on halt
+            			if (mem_wb_valid_q && mem_wb_halt_q)
+                			halted <= 1'b1;
+            		// stop on trap
+            			if (mem_wb_valid_q && mem_wb_trap_q) 
+							begin
+                				halted <= 1'b1;
+                				trap <= 1'b1;
+                				trap_pc <= mem_wb_pc_q;
+            				end
+					end
+			end
     end
 endmodule
