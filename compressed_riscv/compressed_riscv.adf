@@ -35,6 +35,8 @@ FAMILY=
 /rv32_pipeline_control.sv=-1
 /cpu_top.sv=-1
 /definitions.vh=-1
+/tb_memory.sv=-1
+/tb_cpu_top.sv=-1
 [Files.Data]
 .\src\rv32_alu_core.sv=SystemVerilog Source Code
 .\src\rv32_branch_core.sv=SystemVerilog Source Code
@@ -54,6 +56,8 @@ FAMILY=
 .\src\rv32_pipeline_control.sv=SystemVerilog Source Code
 .\src\cpu_top.sv=SystemVerilog Source Code
 .\src\definitions.vh=SystemVerilog Source Code
+.\src\tb_memory.sv=SystemVerilog Source Code
+.\src\tb_cpu_top.sv=SystemVerilog Source Code
 [HierarchyViewer]
 HierarchyInformation=
 ShowHide=ShowTopLevel

@@ -16,3 +16,5 @@ i<>.\src\mem_stage.sv
 i<>.\src\wb_stage.sv
 i<>.\src\cpu_top.sv
 i<>.\src\rv32_pipeline_contrl.sv
+i<>.\src\tb_memory.sv
+i<>.\src\tb_cpu_top.sv

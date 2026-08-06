@@ -16,3 +16,5 @@
 .\src\rv32_pipeline_control.sv
 .\src\cpu_top.sv
 .\src\definitions.vh
+.\src\tb_memory.sv
+.\src\tb_cpu_top.sv
