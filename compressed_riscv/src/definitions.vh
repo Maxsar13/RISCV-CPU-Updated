@@ -50,8 +50,9 @@
 `define RES_MEM 2'd1
 `define RES_PC4 2'd2 
 
-//Counters
+//Counters 
 `define COUNTER_BASE 32'hFFFF_FFF0
+`define LOAD_USE_COUNT 32'hFFFF_FFF0
 `define CYCLE_COUNT 32'hFFFF_FFF4
 `define STALL_COUNT 32'hFFFF_FFF8
 `define INSTR_COUNT 32'hFFFF_FFFC

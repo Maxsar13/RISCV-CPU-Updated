@@ -117,7 +117,8 @@ module cpu_top #(
 	//Counters
 	logic [31:0] cycle_count;
 	logic [31:0] instr_count;
-	logic [31:0] stall_count;
+	logic [31:0] stall_count; 
+	logic [31:0] load_use_count;
 
     // EX/MEM bypass value
     logic [31:0] ex_mem_forward_value;
@@ -388,6 +389,7 @@ module cpu_top #(
         .dmem_req_ready(dmem_req_ready),
         .dmem_resp_valid(dmem_resp_valid),
         .dmem_resp_rdata(dmem_resp_rdata),
+		.load_use_count(load_use_count),
 		.cycle_count(cycle_count),
 		.instr_count(instr_count),
 		.stall_count(stall_count),
@@ -458,7 +460,10 @@ module cpu_top #(
         	end 
 		else
 			begin
-				cycle_count <= cycle_count + 32'd1;	
+				cycle_count <= cycle_count + 32'd1;
+				
+				if(load_use_stall)
+					load_use_count <= load_use_count + 32'd1;
 				
 				if(memory_stall)
 					begin

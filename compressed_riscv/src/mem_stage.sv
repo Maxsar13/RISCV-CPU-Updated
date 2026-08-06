@@ -10,7 +10,8 @@ module mem_stage(
 	input logic trap_in,
 	input logic dmem_req_ready,
 	input logic dmem_resp_valid,
-	input logic [31:0] dmem_resp_rdata,	
+	input logic [31:0] dmem_resp_rdata,
+	input logic [31:0] load_use_count,
 	input logic [31:0] cycle_count,
 	input logic [31:0] instr_count,
 	input logic [31:0] stall_count,
@@ -50,7 +51,8 @@ module mem_stage(
 	begin //Performance counters
 		if(is_perf)
 			begin
-				case(alu_result_in[3:2])
+				case(alu_result_in[3:2]) 
+					2'b00: mem_data_out = load_use_count;
 					2'b01: mem_data_out = cycle_count;
 					2'b10: mem_data_out = stall_count;
 					2'b11: mem_data_out = instr_count;
