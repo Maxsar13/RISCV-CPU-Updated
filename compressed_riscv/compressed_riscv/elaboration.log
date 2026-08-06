@@ -1,0 +1,41 @@
+Active-HDL 17.0.292.10043 2026-08-06 17:41:43
+
+Elaboration top modules:
+Verilog Module                tb_cpu_top
+
+
+-----------------------------------------------------------------------------------------------------
+Verilog Module          | Library          | Info | Compiler Version           | Compilation Options
+-----------------------------------------------------------------------------------------------------
+tb_cpu_top              | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+cpu_top                 | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+tb_memory               | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+rv32_pipeline_control   | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+if_stage                | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+if_id_reg               | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+id_stage                | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+hazard_unit             | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+id_ex_reg               | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+forwarding_unit         | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+ex_stage                | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+ex_mem_reg              | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+mem_stage               | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+mem_wb_reg              | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+wb_stage                | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+rv32_decoder            | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+rv32_regfile            | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+rv32_alu_core           | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+rv32_branch_core        | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+Library                 | Comment
+-----------------------------------------------------------------------------------------------------
+compressed_riscv        | None
+-----------------------------------------------------------------------------------------------------
+
+
+Simulation Options: asim -O5 +access +r +m+tb_cpu_top tb_cpu_top
+
+
+The performance of simulation is reduced. Version Student Edition

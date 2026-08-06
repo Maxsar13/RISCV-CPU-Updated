@@ -29,9 +29,8 @@ module rv32_regfile(
 			begin
 				if(we && rd != 5'b0)
 					begin
-						regs[we] <= wb_data;
+						regs[rd] <= wb_data;
 					end	
-				regs[0] <= 32'b0;
 				end
 			end
 	endmodule

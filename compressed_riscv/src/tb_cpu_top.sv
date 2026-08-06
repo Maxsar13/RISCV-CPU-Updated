@@ -91,13 +91,20 @@ module tb_cpu_top;
 			repeat(60)
 			begin
 				@(posedge clk);
-				$display("t = %0t pc = %08h instr = %08h | cyc = %0d instr = %0d stall = %0d retired = %0d x6 = %0d x7 = %0d x8 = %0d", $time, pc_debug, instr_debug, dut.cycle_count, dut.instr_count, dut.stall_count, retired_debug, dut.id_stage_inst.regfile_inst.regs[6], dut.id_stage_inst.regfile_inst.regs[7], dut.id_stage_inst.regfile_inst.regs[8]);
+				$display("t=%0t pc=%08h instr=%08h | cyc=%0d instr=%0d stall=%0d | id_ex_pc=%08h illegal=%b | x5=%0d x6=%0d x7=%0d x8=%0d",
+    $time, pc_debug, instr_debug,
+    dut.cycle_count, dut.instr_count, dut.stall_count,
+    dut.id_ex_pc_q, dut.id_ex_illegal_q,
+    dut.id_stage_inst.regfile_inst.regs[5],
+    dut.id_stage_inst.regfile_inst.regs[6],
+    dut.id_stage_inst.regfile_inst.regs[7],
+    dut.id_stage_inst.regfile_inst.regs[8]);
 				if(halted) 
 					begin
 						$display(">>> HALTED at t = %0t", $time);
 						$display(">>> FINAL: cycles = %0d instrs = %0d stalls = %0d", dut.cycle_count, dut.instr_count, dut.stall_count);
 						$finish;
-					end
+					end	
 			end
 			$display(">>> timeout");
 			$finish;

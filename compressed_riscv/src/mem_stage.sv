@@ -30,8 +30,9 @@ module mem_stage(
 	assign dmem_active = valid_in && (mem_read_in || mem_write_in) && !trap_in;
 	
 	logic is_perf;
-	assign is_perf = dmem_active && ((alu_result_in[31:4] == 32'hFFFF_FFF0) == `COUNTER_BASE);  //Seperate check as when we access perf counters we're not accessing real memory 
+ 	assign is_perf = dmem_active && ((alu_result_in & 32'hFFFF_FFF0) == `COUNTER_BASE); //Seperate check as when we access perf counters we're not accessing real memory 
 	
+
 	//Dmem request
 	assign dmem_req_valid = dmem_active && !is_perf;  //Making sure dmem_req_valid is set if we are accessing memory
 	assign dmem_req_write = mem_write_in;

@@ -25,8 +25,11 @@ module rv32_decoder (
     output logic         halt
 );	
 
-logic [6:0] opcode = instr[6:0];
-logic [6:0] funct7 = instr[31:25]; 
+logic [6:0] opcode;  
+assign opcode = instr[6:0];
+
+logic [6:0] funct7;
+assign funct7 = instr[31:25];
 
 assign rs1 = instr[19:15];
 assign rs2 = instr[24:20];

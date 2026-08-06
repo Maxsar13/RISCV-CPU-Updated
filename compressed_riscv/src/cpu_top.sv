@@ -120,8 +120,8 @@ module cpu_top #(
 	logic [31:0] stall_count;
 
     // EX/MEM bypass value
-    logic [31:0] ex_mem_forward_value =
-        (ex_mem_result_sel_q == 2'd2) ? (ex_mem_pc_q + 32'd4) : ex_mem_alu_result_q;
+    logic [31:0] ex_mem_forward_value;
+    assign ex_mem_forward_value = (ex_mem_result_sel_q == 2'd2) ? (ex_mem_pc_q + 32'd4) : ex_mem_alu_result_q;
 
     logic [31:0] mem_data;
     logic        memory_stall;

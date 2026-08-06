@@ -37,6 +37,7 @@ FAMILY=
 /definitions.vh=-1
 /tb_memory.sv=-1
 /tb_cpu_top.sv=-1
+/program.hex=-1
 [Files.Data]
 .\src\rv32_alu_core.sv=SystemVerilog Source Code
 .\src\rv32_branch_core.sv=SystemVerilog Source Code
@@ -58,6 +59,7 @@ FAMILY=
 .\src\definitions.vh=SystemVerilog Source Code
 .\src\tb_memory.sv=SystemVerilog Source Code
 .\src\tb_cpu_top.sv=SystemVerilog Source Code
+.\src\program.hex=Memory File
 [HierarchyViewer]
 HierarchyInformation=
 ShowHide=ShowTopLevel
