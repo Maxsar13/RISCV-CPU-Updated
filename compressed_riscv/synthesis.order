@@ -18,3 +18,6 @@ i<>.\src\cpu_top.sv
 i<>.\src\rv32_pipeline_contrl.sv
 i<>.\src\tb_memory.sv
 i<>.\src\tb_cpu_top.sv
+i<>.\src\imem_arbiter.sv
+i<>.\src\dmem_arbiter.sv
+i<>.\src\dual_core_top.sv

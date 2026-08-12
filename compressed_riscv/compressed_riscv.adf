@@ -16,6 +16,7 @@ LANGUAGE=VERILOG
 REFRESH_FLOW=1
 FLOWTOOLS=NONE
 FAMILY=
+fileopenfolder=C:\Users\mxsar\Downloads
 [Files]
 /rv32_alu_core.sv=-1
 /rv32_branch_core.sv=-1
@@ -38,6 +39,9 @@ FAMILY=
 /tb_memory.sv=-1
 /tb_cpu_top.sv=-1
 /program.hex=-1
+/imem_arbiter.sv=-1
+/dmem_arbiter.sv=-1
+/dual_core_top.sv=-1
 [Files.Data]
 .\src\rv32_alu_core.sv=SystemVerilog Source Code
 .\src\rv32_branch_core.sv=SystemVerilog Source Code
@@ -60,6 +64,9 @@ FAMILY=
 .\src\tb_memory.sv=SystemVerilog Source Code
 .\src\tb_cpu_top.sv=SystemVerilog Source Code
 .\src\program.hex=Memory File
+.\src\imem_arbiter.sv=SystemVerilog Source Code
+.\src\dmem_arbiter.sv=SystemVerilog Source Code
+.\src\dual_core_top.sv=SystemVerilog Source Code
 [HierarchyViewer]
 HierarchyInformation=
 ShowHide=ShowTopLevel
