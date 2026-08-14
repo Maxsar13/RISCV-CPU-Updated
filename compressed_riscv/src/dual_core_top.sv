@@ -18,29 +18,29 @@ module dual_core_top #(
     output wire        trap_1
 );
 
-    // ─── core 0 imem wires ───
+    //core 0 imem wires
     wire        imem_req_valid_0;
     wire [31:0] imem_req_addr_0;
     wire        imem_req_ready_0;
     wire        imem_resp_valid_0;
     wire [31:0] imem_resp_data_0;
 
-    // ─── core 0 dmem wires ───
-    wire        dmem_req_valid_0;
-    wire        dmem_req_write_0;
-    wire [31:0] dmem_req_addr_0;
-    wire [31:0] dmem_req_wdata_0;
-    wire [3:0]  dmem_req_wstrb_0;
-    wire        dmem_req_ready_0;
-    wire        dmem_resp_valid_0;
-    wire [31:0] dmem_resp_rdata_0;
+    //core 0 dmem wires 
+    wire        dmem_req_valid_0; //If its a valid operation
+    wire        dmem_req_write_0; //Request to write to the DMEM from Core 0
+    wire [31:0] dmem_req_addr_0;  //Where in the memory we are requesting from
+    wire [31:0] dmem_req_wdata_0; //The data we are writing to the register
+    wire [3:0]  dmem_req_wstrb_0; //Figures out which bytes in the 32 bit data to actually write
+    wire        dmem_req_ready_0; //Arbiter telling core 0 that it can receive data
+    wire        dmem_resp_valid_0; //Arbiter telling core 0 that its data is ready and valid
+    wire [31:0] dmem_resp_rdata_0;	//The data that leaves the data memory
 
-    // ─── core 1 imem wires ───
-    wire        imem_req_valid_1;
-    wire [31:0] imem_req_addr_1;
-    wire        imem_req_ready_1;
-    wire        imem_resp_valid_1;
-    wire [31:0] imem_resp_data_1;
+    // core 1 imem wires
+    wire        imem_req_valid_1; //Core 1 sending a request to the arbiter
+    wire [31:0] imem_req_addr_1; //The address Core 1 wants sto fetch the instruction from
+    wire        imem_req_ready_1; //The arbiter telling core 1 that it can accpet a request
+    wire        imem_resp_valid_1; //The instruction is ready
+    wire [31:0] imem_resp_data_1; //The data from the arbiter to the core 1 (instructions)
 
     // ─── core 1 dmem wires ───
     wire        dmem_req_valid_1;
@@ -52,7 +52,7 @@ module dual_core_top #(
     wire        dmem_resp_valid_1;
     wire [31:0] dmem_resp_rdata_1;
 
-    // ─── memory wires ───
+    // ─── memory wires ───	  //These wires are basically the output of the arbiters to the shared memory
     wire        imem_req_valid_m;
     wire [31:0] imem_req_addr_m;
     wire        imem_req_ready_m;
