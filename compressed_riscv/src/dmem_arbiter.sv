@@ -98,12 +98,20 @@ module dmem_arbiter (
     // read 0xF0000000 to get core ID
     // core 0 gets 0, core 1 gets 1
     wire core_id_req_0 = mmio_req_0 && !dmem_req_write_0 && (dmem_req_addr_0 == 32'hF000_0000);
-    wire core_id_req_1 = mmio_req_1 && !dmem_req_write_1 && (dmem_req_addr_1 == 32'hF000_0000);
+    wire core_id_req_1 = mmio_req_1 && !dmem_req_write_1 && (dmem_req_addr_1 == 32'hF000_0000);	
+	
+	//Read 0xF0000004 to get bus contention count
+	wire bus_cont_req_0 = mmio_req_0 && !dmem_req_write_0 && (dmem_req_addr_0 == 32'hF000_0004);
+	wire bus_cont_req_1 = mmio_req_1 && !dmem_req_write_1 && (dmem_req_addr_1 == 32'hF000_0004);
 
-    assign core_id_valid_0 = core_id_req_0;
-    assign core_id_valid_1 = core_id_req_1;
-    assign core_id_rdata_0 = core_id_req_0 ? 32'd0 : 32'b0;
-    assign core_id_rdata_1 = core_id_req_1 ? 32'd1 : 32'b0;
+    assign core_id_valid_0 = core_id_req_0 || bus_cont_req_0;
+    assign core_id_valid_1 = core_id_req_1 || bus_cont_req_1;
+    assign core_id_rdata_0 = core_id_req_0 ? 32'd0 : bus_cont_req_0 ? bus_contention_count : 32'd0;
+    assign core_id_rdata_1 = core_id_req_1 ? 32'd1 : bus_cont_req_1 ? bus_contention_count : 32'b0;	
+	//Translates to we check if core data is valid, then we assign the data using these statements to see if we output the id or bus contention count
+	
+	
+	
 
     // update round robin after each completed memory transaction
 	//Adding bus contention counter check

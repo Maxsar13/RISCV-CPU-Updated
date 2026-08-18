@@ -119,6 +119,11 @@ module cpu_top #(
 	logic [31:0] instr_count;
 	logic [31:0] stall_count; 
 	logic [31:0] load_use_count;
+	
+	
+	//Figure out Hardware Counters and make software counters more complex
+	//Need memory to test FPGA. U can put SOC design on FPGA and design it so it acts like a CPU
+	//Instead of DRAM we use BRAM and we have to create seperate wrappers for everything
 
     // EX/MEM bypass value
     logic [31:0] ex_mem_forward_value;

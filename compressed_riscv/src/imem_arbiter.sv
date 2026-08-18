@@ -40,11 +40,9 @@ module imem_arbiter (
     wire grant_1 = imem_req_valid_1 && (!imem_req_valid_0 ||  rr_priority);
 
     // forward selected core's request to memory
-    assign imem_req_valid = grant_0 ? imem_req_valid_0 :
-                            grant_1 ? imem_req_valid_1 : 1'b0;
+    assign imem_req_valid = grant_0 ? imem_req_valid_0 : grant_1 ? imem_req_valid_1 : 1'b0;
 
-    assign imem_req_addr  = grant_0 ? imem_req_addr_0 :
-                            grant_1 ? imem_req_addr_1 : 32'b0;
+    assign imem_req_addr  = grant_0 ? imem_req_addr_0 : grant_1 ? imem_req_addr_1 : 32'b0;
 
     // ready signals
     // granted core gets memory's ready signal
