@@ -46,7 +46,7 @@ module dmem_arbiter (
     output wire        core_id_valid_1
 );	
 	//Setting a counter for the bus conention
-	logic [31:0] bus_contnention_count;
+	logic [31:0] bus_contention_count;
 
 
 	// round robin priority
