@@ -86,8 +86,8 @@ FileTimeLow=2916442112
 FileTimeHigh=31270378
 Status=Compiled
 [COMPILESTATUS|.\src\program.hex]
-FileTimeLow=3125944832
-FileTimeHigh=31271433
+FileTimeLow=680848128
+FileTimeHigh=31274182
 Status=Modified
 [Gui config]
 RunFor=100 ns
@@ -271,3 +271,7 @@ Status=Compiled
 FileTimeLow=185404416
 FileTimeHigh=31273404
 Status=Warning
+[COMPILESTATUS|.\src\sim_memory.sv]
+FileTimeLow=2315946240
+FileTimeHigh=31274185
+Status=Modified

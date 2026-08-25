@@ -21,3 +21,4 @@
 .\src\imem_arbiter.sv
 .\src\dmem_arbiter.sv
 .\src\dual_core_top.sv
+.\src\sim_memory.sv

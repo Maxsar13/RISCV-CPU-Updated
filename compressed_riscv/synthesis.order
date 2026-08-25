@@ -21,3 +21,4 @@ i<>.\src\tb_cpu_top.sv
 i<>.\src\imem_arbiter.sv
 i<>.\src\dmem_arbiter.sv
 i<>.\src\dual_core_top.sv
+i<>.\src\sim_memory.sv
