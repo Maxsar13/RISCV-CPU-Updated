@@ -82,8 +82,8 @@ FileTimeLow=981344000
 FileTimeHigh=31270375
 Status=Compiled
 [COMPILESTATUS|.\src\tb_cpu_top.sv]
-FileTimeLow=2916442112
-FileTimeHigh=31270378
+FileTimeLow=2406011648
+FileTimeHigh=31274187
 Status=Compiled
 [COMPILESTATUS|.\src\program.hex]
 FileTimeLow=680848128
@@ -268,10 +268,10 @@ FileTimeLow=2790437120
 FileTimeHigh=31273405
 Status=Compiled
 [COMPILESTATUS|.\src\dual_core_top.sv]
-FileTimeLow=185404416
-FileTimeHigh=31273404
-Status=Warning
+FileTimeLow=876077056
+FileTimeHigh=31274189
+Status=Compiled
 [COMPILESTATUS|.\src\sim_memory.sv]
 FileTimeLow=2315946240
 FileTimeHigh=31274185
-Status=Modified
+Status=Compiled

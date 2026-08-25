@@ -88,7 +88,7 @@ module tb_cpu_top;
 			#20;
 			rst = 0;
 			
-			repeat(60)
+			repeat(400)
 			begin
 				@(posedge clk);
 				$display("t=%0t pc=%08h instr=%08h | cyc=%0d instr=%0d stall=%0d | id_ex_pc=%08h illegal=%b | x5=%0d x6=%0d x7=%0d x8=%0d",
@@ -106,7 +106,7 @@ module tb_cpu_top;
 						$finish;
 					end	
 			end
-			$display(">>> timeout");
+			$display("Measured Cycles = %0d", memory.mem[512]);
 			$finish;
 		end
 endmodule

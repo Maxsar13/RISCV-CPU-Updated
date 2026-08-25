@@ -181,7 +181,7 @@ module dual_core_top #(
     );
 
    sim_memory #(
-        .WORDS(1024)
+        .MEM_WORDS(1024)
     ) mem (
         .clk             (clk),
         .imem_req_valid  (imem_req_valid_m),
