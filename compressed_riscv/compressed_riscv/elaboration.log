@@ -1,15 +1,18 @@
-Active-HDL 17.0.292.10043 2026-08-25 16:14:44
+Active-HDL 17.0.292.10043 2026-08-25 23:53:01
 
 Elaboration top modules:
-Verilog Module                tb_cpu_top
+Verilog Module                tb_dual_core_top
 
 
 -----------------------------------------------------------------------------------------------------
 Verilog Module          | Library          | Info | Compiler Version           | Compilation Options
 -----------------------------------------------------------------------------------------------------
-tb_cpu_top              | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+tb_dual_core_top        | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+dual_core_top           | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
 cpu_top                 | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
-tb_memory               | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+imem_arbiter            | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+dmem_arbiter            | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+sim_memory              | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
 rv32_pipeline_control   | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
 if_stage                | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
 if_id_reg               | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
@@ -35,7 +38,7 @@ compressed_riscv        | None
 -----------------------------------------------------------------------------------------------------
 
 
-Simulation Options: asim -O5 +access +r +m+tb_cpu_top tb_cpu_top
+Simulation Options: asim -O5 +access +r +m+tb_dual_core_top tb_dual_core_top
 
 
 The performance of simulation is reduced. Version Student Edition

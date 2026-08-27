@@ -275,3 +275,15 @@ Status=Compiled
 FileTimeLow=2315946240
 FileTimeHigh=31274185
 Status=Compiled
+[COMPILESTATUS|.\src\tb_dual_core_top.sv]
+FileTimeLow=3682941184
+FileTimeHigh=31274246
+Status=Compiled
+[COMPILESTATUS|.\src\dual_core_program.hex]
+FileTimeLow=3173006592
+FileTimeHigh=31274248
+Status=Modified
+[COMPILESTATUS|.\src\tb_dual_core_top.sv]
+FileTimeLow=3633006592
+FileTimeHigh=31274248
+Status=Compiled
