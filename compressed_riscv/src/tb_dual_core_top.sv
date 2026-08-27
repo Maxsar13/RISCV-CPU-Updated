@@ -13,7 +13,7 @@
 // that each core stores its perf results to 0xA00 / 0xA80 respectively.
  
 module tb_dual_core_top;
-    parameter string HEXFILE = "dual_core_program.hex";
+    parameter string HEXFILE = "dual_core_test.hex";
  
     reg clk = 0, rst = 1;
     integer cycle;
@@ -33,34 +33,28 @@ module tb_dual_core_top;
     localparam int C1 = 496;  // 0x7C0/4
  
     always #5 clk = ~clk;
- 
-    initial $readmemh(HEXFILE, dut.mem.mem);
- 
     initial begin
-        rst = 1;
-        repeat(4) @(posedge clk);
-        rst = 0;
-        for (cycle = 0; cycle < 5000 && !(halted_0 && halted_1); cycle = cycle + 1)
-            @(posedge clk);
-        #1;
+        $readmemh(HEXFILE, dut.mem.mem);
+        $display("LOADED CHECK: mem[0]=%08h mem[11]=%08h mem[45]=%08h mem[512]=%08h",
+            dut.mem.mem[0], dut.mem.mem[11], dut.mem.mem[45], dut.mem.mem[512]);
+    end
  
-        $display("========================================");
-        $display(" Dual-core software perf-counter results");
-        $display("========================================");
-        $display(" ran %0d cycles | halted_0=%b halted_1=%b", cycle, halted_0, halted_1);
-        $display("");
-        $display(" CORE 0 (results @ 0x780):");
-        $display("   core id        = %0d", dut.mem.mem[C0+0]);
-        $display("   measured cycles= %0d", dut.mem.mem[C0+1]);
-        $display("   instr count    = %0d", dut.mem.mem[C0+2]);
-        $display("   bus contention = %0d", dut.mem.mem[C0+3]);
-        $display("");
-        $display(" CORE 1 (results @ 0x7C0):");
-        $display("   core id        = %0d", dut.mem.mem[C1+0]);
-        $display("   measured cycles= %0d", dut.mem.mem[C1+1]);
-        $display("   instr count    = %0d", dut.mem.mem[C1+2]);
-        $display("   bus contention = %0d", dut.mem.mem[C1+3]);
-        $display("========================================");
-        $finish;
+ initial begin
+    rst = 1;
+    repeat(4) @(posedge clk);
+    rst = 0;
+    for (cycle = 0; cycle < 5000 && !(halted_0 && halted_1); cycle = cycle + 1) begin
+        @(posedge clk);
+        if (pc_debug_0 == 32'h000000b0)
+            $display("cyc=%0d pc0=%08h | memstall=%b lustall=%b fetch_en=%b resp0=%b iresp=%b",
+                cycle, pc_debug_0,
+                dut.core0.memory_stall,
+                dut.core0.load_use_stall,
+                dut.core0.fetch_enable,
+                dut.dmem_arb.dmem_resp_valid_0,
+                dut.imem_arb.imem_resp_valid_0);
+    end
+    $display("done: h0=%b h1=%b pc0=%08h", halted_0, halted_1, pc_debug_0);
+    $finish;
     end
 endmodule

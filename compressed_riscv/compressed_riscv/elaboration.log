@@ -1,4 +1,4 @@
-Active-HDL 17.0.292.10043 2026-08-25 23:53:01
+Active-HDL 17.0.292.10043 2026-08-27 13:28:13
 
 Elaboration top modules:
 Verilog Module                tb_dual_core_top
@@ -11,7 +11,7 @@ tb_dual_core_top        | compressed_riscv |      | 17.0.292.10043 (Windows64) |
 dual_core_top           | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
 cpu_top                 | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
 imem_arbiter            | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
-dmem_arbiter            | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
+dmem_arbiter            | compressed_riscv |      | 17.0.292.10043 (Windows64) | -sv2k23 +access +r
 sim_memory              | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
 rv32_pipeline_control   | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23
 if_stage                | compressed_riscv |      | 17.0.292.10043 (Windows64) | -O2 -sv2k23

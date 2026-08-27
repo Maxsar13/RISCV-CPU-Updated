@@ -16,7 +16,7 @@ LANGUAGE=VERILOG
 REFRESH_FLOW=1
 FLOWTOOLS=NONE
 FAMILY=
-fileopenfolder=C:\Users\mxsar\Downloads
+fileopenfolder=E:\Senior Design\compressed_riscv\compressed_riscv\compressed_riscv\src
 [Files]
 /rv32_alu_core.sv=-1
 /rv32_branch_core.sv=-1
@@ -45,7 +45,7 @@ fileopenfolder=C:\Users\mxsar\Downloads
 /dual_core_top.sv=-1
 /sim_memory.sv=-1
 /tb_dual_core_top.sv=-1
-/tb_dual_core_top.sv=-1
+/dual_core_test.hex=-1
 [Files.Data]
 .\src\rv32_alu_core.sv=SystemVerilog Source Code
 .\src\rv32_branch_core.sv=SystemVerilog Source Code
@@ -74,7 +74,7 @@ fileopenfolder=C:\Users\mxsar\Downloads
 .\src\dual_core_top.sv=SystemVerilog Source Code
 .\src\sim_memory.sv=SystemVerilog Source Code
 .\src\tb_dual_core_top.sv=SystemVerilog Source Code
-.\src\tb_dual_core_top.sv=SystemVerilog Source Code
+.\src\dual_core_test.hex=Memory File
 [HierarchyViewer]
 HierarchyInformation=
 ShowHide=ShowTopLevel
