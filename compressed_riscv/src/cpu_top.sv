@@ -462,6 +462,7 @@ module cpu_top #(
 			stall_count <= 32'd0;  
 			cycle_count <= 32'd0;
 			instr_count <= 32'd0;
+			load_use_count <= 32'd0;
         	end 
 		else
 			begin
