@@ -42,6 +42,7 @@ TemplateId=24
 tab=lu
 [OPENDOC|Aldec.Hde.HdePlugIn.7|.\compressed_riscv\src/mem_stage.sv|]
 TemplateId=24
+ActiveDocument=1
 tab=lu
 [OPENDOC|Aldec.Hde.HdePlugIn.7|.\compressed_riscv\src/wb_stage.sv|]
 TemplateId=24
@@ -66,5 +67,10 @@ TemplateId=24
 tab=lu
 [OPENDOC|Aldec.Hde.HdePlugIn.7|.\compressed_riscv\src/tb_dual_core_top.sv|]
 TemplateId=24
-ActiveDocument=1
+tab=lu
+[OPENDOC|Aldec.Hde.HdePlugIn.7|.\compressed_riscv\src/imem_arbiter.sv|]
+TemplateId=24
+tab=lu
+[OPENDOC|Aldec.Hde.HdePlugIn.7|.\compressed_riscv\src/dmem_arbiter.sv|]
+TemplateId=24
 tab=lu
