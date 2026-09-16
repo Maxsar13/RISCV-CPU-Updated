@@ -1,4 +1,4 @@
-Active-HDL 17.0.292.10043 2026-08-27 13:28:13
+Active-HDL 17.0.292.10043 2026-09-15 22:46:11
 
 Elaboration top modules:
 Verilog Module                tb_dual_core_top
@@ -36,9 +36,3 @@ Library                 | Comment
 -----------------------------------------------------------------------------------------------------
 compressed_riscv        | None
 -----------------------------------------------------------------------------------------------------
-
-
-Simulation Options: asim -O5 +access +r +m+tb_dual_core_top tb_dual_core_top
-
-
-The performance of simulation is reduced. Version Student Edition

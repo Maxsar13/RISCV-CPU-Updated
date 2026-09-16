@@ -53,9 +53,9 @@ module dmem_arbiter (
     reg rr_priority; 
 	
     // MMIO address detection
-    // anything with top nibble = 0xF is MMIO
-    wire mmio_req_0 = dmem_req_valid_0 && (dmem_req_addr_0[31:28] == 4'hF);
-    wire mmio_req_1 = dmem_req_valid_1 && (dmem_req_addr_1[31:28] == 4'hF);
+    // Changed this to F00000. This is because counters are FF.... But when we want arbiter to decode, for future purposes we don't want it to include counters.
+    wire mmio_req_0 = dmem_req_valid_0 && (dmem_req_addr_0[31:8] == 24'hF00000);
+    wire mmio_req_1 = dmem_req_valid_1 && (dmem_req_addr_1[31:8] == 24'hF00000);
 
     // real memory requests (not MMIO)
     wire mem_req_valid_0 = dmem_req_valid_0 && !mmio_req_0;
