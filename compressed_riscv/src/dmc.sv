@@ -40,7 +40,7 @@ module dmc(
 	//latched request fields
 	logic [31:0] req_addr_q;
 	logic [31:0] req_wdata_q;
-	logic [3:0] req_wstrb_q; 
+	logic [3:0] req_wstrb_q; //Which 32 bit word to actually write. Whole word, upper or lower half, or by byte.
 	
 	//changing the state register
 	always_ff @(posedge clk or posedge rst) begin
@@ -63,9 +63,9 @@ module dmc(
 				req_wdata_q <= 32'd0;
 				req_wstrb_q <= 4'd0;
 			end
-		else if(state == IDLE_STATE && miss_req_valid && miss_req_ready)
-			begin
-				req_addr_q <= miss_req_addr;
+		else if(state == IDLE_STATE && miss_req_valid && miss_req_ready)  //This is like a place holder for the incoming write values. 
+			begin														  //Since writes dont care about reading something back, we take it once from the dcache and read from here,
+				req_addr_q <= miss_req_addr;							  //And no matter what dcache does, unless it resets we have the saved variables
 				req_wdata_q	<= miss_req_wdata;
 				req_wstrb_q	<= miss_req_wstrb;
 			end

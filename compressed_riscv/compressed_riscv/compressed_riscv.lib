@@ -1,9 +1,9 @@
-timestamp=1790744159311
+timestamp=1790744803837
 
 [~A]
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/cpu_top.sv=0*274653*279304
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/definitions.vh=0*153726*154076
-E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/dmc.sv=0*289468*290723
+E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/dmc.sv=0*292015*293270
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/dmem_arbiter.sv=0*280717*282797
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/dual_core_top.sv=0*203384*205529
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/ex_mem_reg.sv=0*14111*15052
@@ -30,19 +30,19 @@ E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/tb_dual_
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/tb_memory.sv=0*121720*122708
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/wb_stage.sv=0*21796*22479
 LastVerilogToplevel=dmc
-ModifyID=72
+ModifyID=73
 Version=74
 
 [~MFT]
-0=6|0compressed_riscv.mgf|290723|136353
-1=4|1compressed_riscv.mgf|771177|667194
-3=8|3compressed_riscv.mgf|438009|367907
+0=6|0compressed_riscv.mgf|293270|138151
+1=4|1compressed_riscv.mgf|774914|670931
+3=8|3compressed_riscv.mgf|442167|372065
 
 [$root]
-A/$root=22|||1*770771
-BinW64/$root=3*435351
-SLP=3*435466
-Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|c73a565f2ade592f8ac1c68f484c9216136acc151e43ca726895ee9db441cdd5
+A/$root=22|||1*774508
+BinW64/$root=3*439509
+SLP=3*439624
+Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|c73a565f2ade592f8ac1c68f484c9216aa6ddbe465a7d84fc6571b31f147527a
 
 [cpu_top]
 A/cpu_top=22|../src/cpu_top.sv|3|1*731851
@@ -52,11 +52,11 @@ SLP=3*416940
 Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|e32dea686e0093cbbbc8a92fac3b07ad26527262ddaa47cb266f3a3c4d9b973a76f1b47a7cfeabb933d6be73cd4ade0c
 
 [dmc]
-A/dmc=22|../src/dmc.sv|1|1*771177
-BinW64/dmc=3*435550
+A/dmc=22|../src/dmc.sv|1|1*774914
+BinW64/dmc=3*439708
 R=../src/dmc.sv|1
-SLP=3*438009
-Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|b7c8d53be8c9414ab39bba51bd7d0737a3c894130eefffeaa881a8f832457fea
+SLP=3*442167
+Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|b7c8d53be8c9414ab39bba51bd7d0737a8985e7962cadce19d4663c4a82add2b
 
 [dmem_arbiter]
 A/dmem_arbiter=22|../src/dmem_arbiter.sv|7|1*752221
@@ -220,9 +220,9 @@ SLP=3*355686
 Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|2b7475f35b8a8842cc38c31e13c48d0b0bafa52c4e5082916fa00306e52ea5edcc46028070bc1272610a6017c521c4e0
 
 [~U]
-$root=12|0*288719|
+$root=12|0*291266|
 cpu_top=12|0*274134|
-dmc=12|0*289061||0x10
+dmc=12|0*291608||0x10
 dmem_arbiter=12|0*280193||0x10
 dual_core_top=12|0*230312|
 ex_mem_reg=12|0*224211|
