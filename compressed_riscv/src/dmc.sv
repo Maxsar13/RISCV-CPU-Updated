@@ -75,11 +75,23 @@ module dmc(
 	always_comb begin
 		next_state = state;
 		case (state)
-			IDLE_STATE: begin
+			IDLE_STATE: begin 
+				if(miss_req_valid)
+					begin
+						next_state = miss_req_write ? WRITE_WAIT : READ_WAIT;
+					end
 			end
-			READ_WAIT: begin
+			READ_WAIT: begin 
+				if (mem_resp_valid)
+					begin
+						next_state = IDLE_STATE;
+					end
 			end
 			WRITE_WAIT: begin
+				if(mem_req_ready && mem_req_valid) //Since for write we just dump, theres gotta be something to tell us if its reveived.											
+					begin						   //If arbiter idles high, then mem_req_ready is asserted before mem_req_valid, meaning both should be set high
+						next_state = IDLE_STATE;
+					end
 			end
 			default: next_state = IDLE_STATE;
 		endcase
@@ -87,18 +99,41 @@ module dmc(
 	
 	//output logic
 	always_comb begin
-		//Defaults for every output
+		//Defaults for every output	
+		miss_req_ready = 1'b0;
+		miss_resp_ready = 1'b0;
+		miss_resp_data = 64'd0;
+		mem_req_valid = 1'b0;
+		mem_req_write = 1'b0;
+		mem_req_addr = 32'd0;
+		mem_req_wdata = 32'd0;
+		mem_req_wstrb = 4'd0;
+		
+		
+		
 		case (state)
 			IDLE_STATE:
-			begin
+			begin 
+				miss_req_ready = 1'b1;
 			end
 			READ_WAIT:
-			begin
+			begin	
+				mem_req_valid = 1'b1;
+				mem_req_write = 1'b0;
+				miss_resp_ready = mem_resp_valid;
+				miss_resp_data = mem_resp_data;
+				mem_req_addr = {req_addr_q[31:3], 3'b000}; //Line aligned as each line covers every 16 bits
+				
 			end
 			WRITE_WAIT:
-			begin
+			begin 
+				mem_req_valid = 1'b1;
+				mem_req_write = 1'b1;
+				mem_req_wdata = req_wdata_q;
+				mem_req_wstrb = req_wstrb_q;
+				mem_req_addr = req_addr_q;	//We only write 32 bits at a time which should be aligned already with the data
 			end
-			default:	;
+			default: ;
 		endcase
 	end
 endmodule			   
