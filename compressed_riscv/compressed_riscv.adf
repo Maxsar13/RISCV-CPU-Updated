@@ -46,6 +46,7 @@ fileopenfolder=E:\Senior Design\compressed_riscv\compressed_riscv\compressed_ris
 /sim_memory.sv=-1
 /tb_dual_core_top.sv=-1
 /dual_core_test.hex=-1
+/dmc.sv=-1
 [Files.Data]
 .\src\rv32_alu_core.sv=SystemVerilog Source Code
 .\src\rv32_branch_core.sv=SystemVerilog Source Code
@@ -75,6 +76,7 @@ fileopenfolder=E:\Senior Design\compressed_riscv\compressed_riscv\compressed_ris
 .\src\sim_memory.sv=SystemVerilog Source Code
 .\src\tb_dual_core_top.sv=SystemVerilog Source Code
 .\src\dual_core_test.hex=Memory File
+.\src\dmc.sv=SystemVerilog Source Code
 [HierarchyViewer]
 HierarchyInformation=
 ShowHide=ShowTopLevel

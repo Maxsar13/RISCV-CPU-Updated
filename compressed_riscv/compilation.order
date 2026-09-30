@@ -23,3 +23,4 @@
 .\src\dual_core_top.sv
 .\src\sim_memory.sv
 .\src\tb_dual_core_top.sv
+.\src\dmc.sv
