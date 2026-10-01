@@ -1,4 +1,4 @@
-module dmc(
+module d_dmc(
 	input logic clk,
 	input logic rst,
 	
@@ -16,7 +16,7 @@ module dmc(
 	
 	//DMC to Dcache 
 	output logic miss_req_ready,	//Ready to accept a new request
-	output logic miss_resp_ready,		//64 bit line is available
+	output logic miss_resp_valid,		//64 bit line is available
 	output logic [63:0] miss_resp_data,
 	
 	//DMC to Arbiter
@@ -30,7 +30,8 @@ module dmc(
 	//initiating the FSM
 	typedef enum logic[1:0] {
 	IDLE_STATE,
-	READ_WAIT,
+	READ_REQ, //Request is sent out, it is now just waiting to be accepted
+	READ_DATA,		//Accepted and it is now just waiting for data.
 	WRITE_WAIT
 	} state_t;
 	
@@ -63,7 +64,7 @@ module dmc(
 				req_wdata_q <= 32'd0;
 				req_wstrb_q <= 4'd0;
 			end
-		else if(state == IDLE_STATE && miss_req_valid && miss_req_ready)  //This is like a place holder for the incoming write values. 
+		else if(state == IDLE_STATE && miss_req_valid)  				  //This is like a place holder for the incoming write values. 
 			begin														  //Since writes dont care about reading something back, we take it once from the dcache and read from here,
 				req_addr_q <= miss_req_addr;							  //And no matter what dcache does, unless it resets we have the saved variables
 				req_wdata_q	<= miss_req_wdata;
@@ -78,17 +79,23 @@ module dmc(
 			IDLE_STATE: begin 
 				if(miss_req_valid)
 					begin
-						next_state = miss_req_write ? WRITE_WAIT : READ_WAIT;
+						next_state = miss_req_write ? WRITE_WAIT : READ_REQ;
 					end
 			end
-			READ_WAIT: begin 
-				if (mem_resp_valid)
+			READ_REQ: begin 
+				if (mem_req_ready)
+					begin
+						next_state = READ_DATA;
+					end
+			end
+			READ_DATA: begin
+				if(mem_resp_valid)
 					begin
 						next_state = IDLE_STATE;
 					end
 			end
 			WRITE_WAIT: begin
-				if(mem_req_ready && mem_req_valid) //Since for write we just dump, theres gotta be something to tell us if its reveived.											
+				if(mem_req_ready) 				   //Since for write we just dump, theres gotta be something to tell us if its reveived.											
 					begin						   //If arbiter idles high, then mem_req_ready is asserted before mem_req_valid, meaning both should be set high
 						next_state = IDLE_STATE;
 					end
@@ -101,7 +108,7 @@ module dmc(
 	always_comb begin
 		//Defaults for every output	
 		miss_req_ready = 1'b0;
-		miss_resp_ready = 1'b0;
+		miss_resp_valid = 1'b0;
 		miss_resp_data = 64'd0;
 		mem_req_valid = 1'b0;
 		mem_req_write = 1'b0;
@@ -109,22 +116,25 @@ module dmc(
 		mem_req_wdata = 32'd0;
 		mem_req_wstrb = 4'd0;
 		
-		
+		//Mem_req_valid will now only set when a request isnt accepted
 		
 		case (state)
 			IDLE_STATE:
 			begin 
 				miss_req_ready = 1'b1;
 			end
-			READ_WAIT:
+			READ_REQ:
 			begin	
 				mem_req_valid = 1'b1;
 				mem_req_write = 1'b0;
-				miss_resp_ready = mem_resp_valid;
-				miss_resp_data = mem_resp_data;
 				mem_req_addr = {req_addr_q[31:3], 3'b000}; //Line aligned as each line covers every 16 bits
 				
 			end
+			READ_DATA: 
+			begin	
+				miss_resp_valid = mem_resp_valid;
+				miss_resp_data = mem_resp_data;
+			end	
 			WRITE_WAIT:
 			begin 
 				mem_req_valid = 1'b1;
