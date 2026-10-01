@@ -322,12 +322,12 @@ WindowWorkspaceInfo="LAAAAAAAAAABAAAA/////////////////////80AAACZAAAAnwUAAFwCAAA
 [COMPILESTATUS|.\src\d_dmc.sv]
 FileTimeLow=2370306816
 FileTimeHigh=31281504
-Status=Modified
+Status=Compiled
 [COMPILESTATUS|.\src\i_dmc.sv]
 FileTimeLow=285274112
 FileTimeHigh=31281503
 Status=Modified
 [COMPILESTATUS|.\src\i_dmc.sv]
-FileTimeLow=4090306816
-FileTimeHigh=31281504
-Status=Modified
+FileTimeLow=1260503040
+FileTimeHigh=31281510
+Status=Compiled
