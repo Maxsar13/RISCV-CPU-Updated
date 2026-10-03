@@ -1,12 +1,12 @@
-timestamp=1790832771541
+timestamp=1791007471265
 
 [~A]
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/cpu_top.sv=0*274653*279304
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/d_dmc.sv=0*299449*300738
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/definitions.vh=0*153726*154076
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/dmc.sv=0*294569*295856
-E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/dmem_arbiter.sv=0*280717*282797
-E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/dual_core_top.sv=0*203384*205529
+E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/dmem_arbiter.sv=0*316606*319134
+E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/dual_core_top.sv=0*320395*322540
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/ex_mem_reg.sv=0*14111*15052
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/ex_stage.sv=0*36419*37823
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/fowarding_unit.sv=0*19926*20647
@@ -16,9 +16,10 @@ E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/id_ex_re
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/id_stage.sv=0*26122*27109
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/if_id_reg.sv=0*9630*10250
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/if_stage.sv=0*28314*29173
-E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/imem_arbiter.sv=0*181034*182009
+E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/imem_arbiter.sv=0*313976*315144
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/mem_stage.sv=0*284235*285880
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/mem_wb_reg.sv=0*16294*17123
+E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/memory_controller.sv=0*323940*325481
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/rv32_alu_core.sv=0*1465*2185
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/rv32_alu_core.sv_rv32_branch_core.sv_rv32_regfile.sv_rv32_decoder.sv_if_id_reg.sv_id_ex_reg.sv_ex_mem_reg.sv_mem_wb_reg.sv_if_stage.sv_id_stage.sv_ex_stage.sv_mem_stage.sv_wb_stage.sv_hazard_unit.sv_fowarding_unit.sv_rv32_pipeline_control.sv_cpu_top.sv_definitions.vh_tb_memory.sv_tb_cpu_top.sv=0*162275*175947
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/rv32_alu_core.sv_rv32_branch_core.sv_rv32_regfile.sv_rv32_decoder.sv_if_id_reg.sv_id_ex_reg.sv_ex_mem_reg.sv_mem_wb_reg.sv_if_stage.sv_id_stage.sv_ex_stage.sv_mem_stage.sv_wb_stage.sv_hazard_unit.sv_fowarding_unit.sv_rv32_pipeline_control.sv_cpu_top.sv_definitions.vh_tb_memory.sv_tb_cpu_top.sv_imem_arbiter.sv_dmem_arbiter.sv_dual_core_top.sv_sim_memory.sv_tb_dual_core_top.sv=0*231545*249204
@@ -31,20 +32,20 @@ E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/tb_cpu_t
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/tb_dual_core_top.sv=0*269160*270364
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/tb_memory.sv=0*121720*122708
 E:/Senior Design/compressed_riscv/compressed_riscv/compressed_riscv/src/wb_stage.sv=0*21796*22479
-LastVerilogToplevel=d_dmc
-ModifyID=76
+LastVerilogToplevel=memory_controller
+ModifyID=84
 Version=74
 
 [~MFT]
-0=4|0compressed_riscv.mgf|300738|139949
-1=3|1compressed_riscv.mgf|785328|675480
-3=6|3compressed_riscv.mgf|453804|376621
+0=6|0compressed_riscv.mgf|325481|155594
+1=3|1compressed_riscv.mgf|835209|719845
+3=6|3compressed_riscv.mgf|492820|407023
 
 [$root]
-A/$root=22|||1*784906
-BinW64/$root=3*451173
-SLP=3*451288
-Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|c73a565f2ade592f8ac1c68f484c92163707824711e592bf7dc75b03acf7b9c9
+A/$root=22|||1*834787
+BinW64/$root=3*489509
+SLP=3*489624
+Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|c73a565f2ade592f8ac1c68f484c921652a28a989d4b5c30be48a09b08606b8a
 
 [cpu_top]
 A/cpu_top=22|../src/cpu_top.sv|3|1*731851
@@ -54,11 +55,11 @@ SLP=3*416940
 Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|e32dea686e0093cbbbc8a92fac3b07ad26527262ddaa47cb266f3a3c4d9b973a76f1b47a7cfeabb933d6be73cd4ade0c
 
 [d_dmc]
-A/d_dmc=22|../src/d_dmc.sv|1|1*785328
-BinW64/d_dmc=3*451372
-R=../src/d_dmc.sv|1
-SLP=3*453804
-Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|4ceb5214b5a171dc344665e1781c162544f43e81b5033779cd0940b371b9b65d
+A/d_dmc=22|../src/memory_controller.sv|1|1*806604
+BinW64/d_dmc=3*471521
+R=../src/memory_controller.sv|1
+SLP=3*474621
+Version=17.0.292.10043 (Windows64)|00000007789cd32d2e33ca3632060008e20219|4ceb5214b5a171dc344665e1781c1625198dc0856d252d63f1b2d3e3c3821e57
 
 [dmc]
 A/dmc=22|../src/dmc.sv|1|1*778651
@@ -68,18 +69,18 @@ SLP=3*446326
 Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|b7c8d53be8c9414ab39bba51bd7d07371c03f997a2a5c453458ecaae143ee585
 
 [dmem_arbiter]
-A/dmem_arbiter=22|../src/dmem_arbiter.sv|7|1*752221
-BinW64/dmem_arbiter=3*418170
+A/dmem_arbiter=22|../src/dmem_arbiter.sv|7|1*815035
+BinW64/dmem_arbiter=3*480066
 R=../src/dmem_arbiter.sv|7
-SLP=3*422825
-Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|58e0fc7b4584065cc173b11401a66cf37ddfc89ba1f5b30a626751546ac7eb4619b4f525c5bd71e6efb4a5454553868c
+SLP=3*485878
+Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|58e0fc7b4584065cc173b11401a66cf37ddfc89ba1f5b30a626751546ac7eb46f807c5e8e6489822fb08ca436f264a49
 
 [dual_core_top]
-A/dual_core_top=22|../src/dual_core_top.sv|5|1*675100
-BinW64/dual_core_top=3*376717
+A/dual_core_top=22|../src/dual_core_top.sv|5|1*824907
+BinW64/dual_core_top=3*488685
 R=../src/dual_core_top.sv|5
-SLP=3*376965
-Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|8329327bbd076fccd163346f81a7db70209704c11def47b5655c148263507bf2e3d89ad9e6d24ca549bc3354b839630f
+SLP=3*489332
+Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|8329327bbd076fccd163346f81a7db70209704c11def47b5655c148263507bf27ed1e610145308228a652522dfe1615f
 
 [ex_mem_reg]
 A/ex_mem_reg=22|../src/ex_mem_reg.sv|1|1*604941
@@ -145,11 +146,11 @@ SLP=3*341017
 Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|aea966a050ed7213625cc19bf475c99d9dc5b99f766d89beef52f8a7e86d629417d60eb021f812e697f48d4b169a1110
 
 [imem_arbiter]
-A/imem_arbiter=22|../src/imem_arbiter.sv|6|1*665163
-BinW64/imem_arbiter=3*369118
+A/imem_arbiter=22|../src/imem_arbiter.sv|6|1*811159
+BinW64/imem_arbiter=3*476801
 R=../src/imem_arbiter.sv|6
-SLP=3*370631
-Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|b29653711cecca629e0b34b7a16401b133f50e6e512d006cb8f50838b2e4e0e282991ee4fd9c8a3f0700b8cd51914b9f
+SLP=3*478869
+Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|b29653711cecca629e0b34b7a16401b133f50e6e512d006cb8f50838b2e4e0e2ed9811520db246dedf206e877059b54b
 
 [mem_stage]
 A/mem_stage=22|../src/mem_stage.sv|3|1*761311
@@ -164,6 +165,13 @@ BinW64/mem_wb_reg=3*337779
 R=../src/mem_wb_reg.sv|1
 SLP=3*338885
 Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|8c04b8ef8cb3153bdf26c5e19c854b14e1df5aec68c3d9ba1b1bb0251b8d2863cf980e3797aa06fcfcde1e62af900013
+
+[memory_controller]
+A/memory_controller=22|../src/memory_controller.sv|1|1*835209
+BinW64/memory_controller=3*489708
+R=../src/memory_controller.sv|1
+SLP=3*492820
+Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|82c17787c1f5b44a06f4393748447cc7d14cc560baf094081afe767883e7d70172bbd691927a56b580605c1e32b3ee19
 
 [rv32_alu_core]
 A/rv32_alu_core=22|../src/rv32_alu_core.sv|3|1*589950
@@ -236,12 +244,12 @@ SLP=3*355686
 Version=17.0.292.10043 (Windows64)|0000000b789cd3f53752d02d2e33ca3632060010ad02e7|2b7475f35b8a8842cc38c31e13c48d0b0bafa52c4e5082916fa00306e52ea5edcc46028070bc1272610a6017c521c4e0
 
 [~U]
-$root=12|0*298674|
+$root=12|0*323093|
 cpu_top=12|0*274134|
-d_dmc=12|0*299032||0x10
+d_dmc=12|0*310743||0x10
 dmc=12|0*294155||0x10
-dmem_arbiter=12|0*280193||0x10
-dual_core_top=12|0*230312|
+dmem_arbiter=12|0*316054||0x10
+dual_core_top=12|0*320044|
 ex_mem_reg=12|0*224211|
 ex_stage=12|0*225990|
 forwarding_unit=12|0*227643|
@@ -251,9 +259,10 @@ id_ex_reg=12|0*223604|
 id_stage=12|0*225513|
 if_id_reg=12|0*223325|
 if_stage=12|0*225151|
-imem_arbiter=12|0*229555|
+imem_arbiter=12|0*313635||0x10
 mem_stage=12|0*283691|
 mem_wb_reg=12|0*224706|
+memory_controller=12|0*323467||0x10
 rv32_alu_core=12|0*222201|
 rv32_branch_core=12|0*222433|
 rv32_decoder=12|0*222939|
@@ -264,4 +273,3 @@ tb_cpu_top=12|0*229258||0x10
 tb_dual_core_top=12|0*268912||0x10
 tb_memory=12|0*228852|
 wb_stage=12|0*227042|
-                                                              

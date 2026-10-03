@@ -25,3 +25,4 @@ i<>.\src\sim_memory.sv
 i<>.\src\tb_dual_core_top.sv
 i<>.\src\dmc.sv
 i<>.\src\i_dmc.sv
+i<>.\src\memory_controller_tb.sv

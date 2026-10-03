@@ -1,25 +1,32 @@
-module d_dmc(
+module memory_controller(
 	input logic clk,
 	input logic rst,
 	
-	//Dcache to DMC
-	input logic miss_req_valid,
-	input logic miss_req_write,
-	input logic [31:0] miss_req_addr,
-	input logic [31:0] miss_req_wdata,
-	input logic [3:0] miss_req_wstrb,
+	//IMEM arbiter to MC
+	input logic i_req_valid,
+	input logic [31:0] i_req_addr,
+	output logic i_req_ready,
+	output logic i_resp_valid,
+	output logic [63:0] i_resp_data,
 	
-	//Arbiter to DMC
+	//DMEM arbiter to MC 
+	input logic d_req_valid,
+	input logic d_req_write,
+	input logic [31:0] d_req_addr,	 
+	input logic [31:0] d_req_wdata,
+	input logic [3:0] d_req_wstrb,
+	output logic d_req_ready,
+	output logic d_resp_valid, 
+	output logic [63:0] d_resp_data,
+	
+	
+	//Bridge to MC
 	input logic mem_req_ready,
 	input logic mem_resp_valid,
 	input logic [63:0] mem_resp_data,
 	
-	//DMC to Dcache 
-	output logic miss_req_ready,	//Ready to accept a new request
-	output logic miss_resp_valid,		//64 bit line is available
-	output logic [63:0] miss_resp_data,
 	
-	//DMC to Arbiter
+	//DMC to Bridge
 	output logic mem_req_valid,
 	output logic mem_req_write,
 	output logic [31:0] mem_req_addr,
@@ -41,7 +48,16 @@ module d_dmc(
 	//latched request fields
 	logic [31:0] req_addr_q;
 	logic [31:0] req_wdata_q;
-	logic [3:0] req_wstrb_q; //Which 32 bit word to actually write. Whole word, upper or lower half, or by byte.
+	logic [3:0] req_wstrb_q; //Which 32 bit word to actually write. Whole word, upper or lower half, or by byte. 
+	
+	logic rr; //Making a round robin for imem and dmem. 0 = imem, 1 = dmem
+	logic sel_q;	//Whoever owns the request
+	
+	
+	//Assigning priorities by looking at req_valid in inputs, as well as round robin variable
+	logic grant_i, grant_d;
+	assign grant_i = i_req_valid && (!d_req_valid || !rr);
+	assign grant_d = d_req_valid && (!i_req_valid || rr);
 	
 	//changing the state register
 	always_ff @(posedge clk or posedge rst) begin
@@ -60,15 +76,19 @@ module d_dmc(
 	always_ff @(posedge clk or posedge rst) begin
 		if(rst)
 			begin
+				sel_q <= 0;
+				rr <= 0;
 				req_addr_q <= 32'd0;
 				req_wdata_q <= 32'd0;
-				req_wstrb_q <= 4'd0;
+				req_wstrb_q <= 4'd0; 
 			end
-		else if(state == IDLE_STATE && miss_req_valid)  				  //This is like a place holder for the incoming write values. 
-			begin														  //Since writes dont care about reading something back, we take it once from the dcache and read from here,
-				req_addr_q <= miss_req_addr;							  //And no matter what dcache does, unless it resets we have the saved variables
-				req_wdata_q	<= miss_req_wdata;
-				req_wstrb_q	<= miss_req_wstrb;
+		else if(state == IDLE_STATE && (grant_i || grant_d))  				  //This is like a place holder for the incoming write values. 
+			begin
+				sel_q <= grant_d;		   //Since dmem is 1, if its 0 then Imem has priority
+				req_addr_q <= grant_d ? d_req_addr : i_req_addr;							  
+				req_wdata_q	<= d_req_wdata;
+				req_wstrb_q	<= d_req_wstrb;
+				rr <= grant_i;			  //If grant_i, round robin goes to 0, else goes to 1
 			end
 		end
 		
@@ -77,9 +97,13 @@ module d_dmc(
 		next_state = state;
 		case (state)
 			IDLE_STATE: begin 
-				if(miss_req_valid)
+				if(grant_d && d_req_write)
 					begin
-						next_state = miss_req_write ? WRITE_WAIT : READ_REQ;
+						next_state = WRITE_WAIT;
+					end
+				else if(grant_i || grant_d)
+					begin
+						next_state = READ_REQ;
 					end
 			end
 			READ_REQ: begin 
@@ -107,33 +131,39 @@ module d_dmc(
 	//output logic
 	always_comb begin
 		//Defaults for every output	
-		miss_req_ready = 1'b0;
-		miss_resp_valid = 1'b0;
-		miss_resp_data = 64'd0;
 		mem_req_valid = 1'b0;
 		mem_req_write = 1'b0;
 		mem_req_addr = 32'd0;
 		mem_req_wdata = 32'd0;
-		mem_req_wstrb = 4'd0;
+		mem_req_wstrb = 4'd0; 
+		i_req_ready = 1'b0;
+		d_req_ready = 1'b0;
+		i_resp_valid = 1'b0;
+		d_resp_valid = 1'b0;
+		i_resp_data = 64'd0;
+		d_resp_data = 64'd0;
 		
 		//Mem_req_valid will now only set when a request isnt accepted
 		
 		case (state)
 			IDLE_STATE:
 			begin 
-				miss_req_ready = 1'b1;
+				i_req_ready = grant_i;
+				d_req_ready = grant_d;
 			end
 			READ_REQ:
 			begin	
 				mem_req_valid = 1'b1;
 				mem_req_write = 1'b0;
-				mem_req_addr = {req_addr_q[31:3], 3'b000}; //Line aligned as each line covers every 16 bits
+				mem_req_addr = {req_addr_q[31:3], 3'b000}; //64 bit line, clear last 3 bits
 				
 			end
 			READ_DATA: 
 			begin	
-				miss_resp_valid = mem_resp_valid;
-				miss_resp_data = mem_resp_data;
+				i_resp_valid = mem_resp_valid && !sel_q;
+				d_resp_valid = mem_resp_valid && sel_q;
+				i_resp_data = mem_resp_data;			   //Data gets sent to both, but resp_valid decides what cache actually recieves it
+				d_resp_data = mem_resp_data;
 			end	
 			WRITE_WAIT:
 			begin 
