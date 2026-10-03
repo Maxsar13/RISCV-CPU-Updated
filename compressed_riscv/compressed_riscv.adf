@@ -48,6 +48,7 @@ fileopenfolder=E:\Senior Design\compressed_riscv\compressed_riscv\compressed_ris
 /dual_core_test.hex=-1
 /memory_controller.sv=-1
 /memory_controller_tb.sv=-1
+/lock_unit.sv=-1
 [Files.Data]
 .\src\rv32_alu_core.sv=SystemVerilog Source Code
 .\src\rv32_branch_core.sv=SystemVerilog Source Code
@@ -79,6 +80,7 @@ fileopenfolder=E:\Senior Design\compressed_riscv\compressed_riscv\compressed_ris
 .\src\dual_core_test.hex=Memory File
 .\src\memory_controller.sv=SystemVerilog Source Code
 .\src\memory_controller_tb.sv=SystemVerilog Source Code
+.\src\lock_unit.sv=SystemVerilog Source Code
 [HierarchyViewer]
 HierarchyInformation=
 ShowHide=ShowTopLevel

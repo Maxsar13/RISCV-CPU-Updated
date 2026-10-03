@@ -25,3 +25,4 @@
 .\src\tb_dual_core_top.sv
 .\src\memory_controller.sv
 .\src\memory_controller_tb.sv
+.\src\lock_unit.sv

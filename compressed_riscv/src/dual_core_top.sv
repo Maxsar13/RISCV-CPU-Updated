@@ -6,69 +6,109 @@ module dual_core_top #(
     parameter CORE0_RESET_VECTOR = 32'h0000_0000,
     parameter CORE1_RESET_VECTOR = 32'h0000_0800
 )(
-    input wire clk,
-    input wire rst,
+    input logic clk,
+    input logic rst,
 
     // debug outputs
-    output wire [31:0] pc_debug_0,
-    output wire [31:0] pc_debug_1,
-    output wire        halted_0,
-    output wire        halted_1,
-    output wire        trap_0,
-    output wire        trap_1
+    output logic [31:0] pc_debug_0,
+    output logic [31:0] pc_debug_1,
+    output logic        halted_0,
+    output logic        halted_1,
+    output logic        trap_0,
+    output logic        trap_1,
+
+    // shared memory interface; simulation testbenches provide tb_memory,
+    // while FPGA/system tops provide BRAM-backed memories.
+    output logic        imem_req_valid,
+    output logic [31:0] imem_req_addr,
+    input  logic        imem_req_ready,
+    input  logic        imem_resp_valid,
+    input  logic [31:0] imem_resp_data,
+    output logic        dmem_req_valid,
+    output logic        dmem_req_write,
+    output logic [31:0] dmem_req_addr,
+    output logic [31:0] dmem_req_wdata,
+    output logic [3:0]  dmem_req_wstrb,
+    input  logic        dmem_req_ready,
+    input  logic        dmem_resp_valid,
+    input  logic [31:0] dmem_resp_rdata
 );
 
-    //core 0 imem wires
-    wire        imem_req_valid_0;
-    wire [31:0] imem_req_addr_0;
-    wire        imem_req_ready_0;
-    wire        imem_resp_valid_0;
-    wire [31:0] imem_resp_data_0;
+    // --- core 0 imem wires ---
+    logic        imem_req_valid_0;
+    logic [31:0] imem_req_addr_0;
+    logic        imem_req_ready_0;
+    logic        imem_resp_valid_0;
+    logic [31:0] imem_resp_data_0;
 
-    //core 0 dmem wires 
-    wire        dmem_req_valid_0; //If its a valid operation
-    wire        dmem_req_write_0; //Request to write to the DMEM from Core 0
-    wire [31:0] dmem_req_addr_0;  //Where in the memory we are requesting from
-    wire [31:0] dmem_req_wdata_0; //The data we are writing to the register
-    wire [3:0]  dmem_req_wstrb_0; //Figures out which bytes in the 32 bit data to actually write
-    wire        dmem_req_ready_0; //Arbiter telling core 0 that it can receive data
-    wire        dmem_resp_valid_0; //Arbiter telling core 0 that its data is ready and valid
-    wire [31:0] dmem_resp_rdata_0;	//The data that leaves the data memory
+    // --- core 0 dmem wires ---
+    logic        dmem_req_valid_0;
+    logic        dmem_req_write_0;
+    logic [31:0] dmem_req_addr_0;
+    logic [31:0] dmem_req_wdata_0;
+    logic [3:0]  dmem_req_wstrb_0;
+    logic        dmem_req_ready_0;
+    logic        dmem_resp_valid_0;
+    logic [31:0] dmem_resp_rdata_0;
 
-    // core 1 imem wires
-    wire        imem_req_valid_1; //Core 1 sending a request to the arbiter
-    wire [31:0] imem_req_addr_1; //The address Core 1 wants sto fetch the instruction from
-    wire        imem_req_ready_1; //The arbiter telling core 1 that it can accpet a request
-    wire        imem_resp_valid_1; //The instruction is ready
-    wire [31:0] imem_resp_data_1; //The data from the arbiter to the core 1 (instructions)
+    // --- core 1 imem wires ---
+    logic        imem_req_valid_1;
+    logic [31:0] imem_req_addr_1;
+    logic        imem_req_ready_1;
+    logic        imem_resp_valid_1;
+    logic [31:0] imem_resp_data_1;
 
-    // ─── core 1 dmem wires ───
-    wire        dmem_req_valid_1;
-    wire        dmem_req_write_1;
-    wire [31:0] dmem_req_addr_1;
-    wire [31:0] dmem_req_wdata_1;
-    wire [3:0]  dmem_req_wstrb_1;
-    wire        dmem_req_ready_1;
-    wire        dmem_resp_valid_1;
-    wire [31:0] dmem_resp_rdata_1;
+    // --- core 1 dmem wires ---
+    logic        dmem_req_valid_1;
+    logic        dmem_req_write_1;
+    logic [31:0] dmem_req_addr_1;
+    logic [31:0] dmem_req_wdata_1;
+    logic [3:0]  dmem_req_wstrb_1;
+    logic        dmem_req_ready_1;
+    logic        dmem_resp_valid_1;
+    logic [31:0] dmem_resp_rdata_1;
 
-    // ─── memory wires ───	  //These wires are basically the output of the arbiters to the shared memory
-    wire        imem_req_valid_m;
-    wire [31:0] imem_req_addr_m;
-    wire        imem_req_ready_m;
-    wire        imem_resp_valid_m;
-    wire [31:0] imem_resp_data_m;
+    // --- memory wires ---
+    logic        imem_req_valid_m;
+    logic [31:0] imem_req_addr_m;
+    logic        imem_req_ready_m;
+    logic        imem_resp_valid_m;
+    logic [31:0] imem_resp_data_m;
 
-    wire        dmem_req_valid_m;
-    wire        dmem_req_write_m;
-    wire [31:0] dmem_req_addr_m;
-    wire [31:0] dmem_req_wdata_m;
-    wire [3:0]  dmem_req_wstrb_m;
-    wire        dmem_req_ready_m;
-    wire        dmem_resp_valid_m;
-    wire [31:0] dmem_resp_rdata_m;
+    logic        dmem_req_valid_m;
+    logic        dmem_req_write_m;
+    logic [31:0] dmem_req_addr_m;
+    logic [31:0] dmem_req_wdata_m;
+    logic [3:0]  dmem_req_wstrb_m;
+    logic        dmem_req_ready_m;
+    logic        dmem_resp_valid_m;
+    logic [31:0] dmem_resp_rdata_m;
 
-    // ─── core 0 ───
+
+    // --- lock unit wires ---
+    // connects the dmem arbiter MMIO path to the shared lock
+    logic        lock_req_0;
+    logic        lock_write_0;
+    logic [31:0] lock_addr_0;
+    logic [31:0] lock_wdata_0;
+    logic        lock_ready_0;
+    logic        lock_resp_valid_0;
+    logic [31:0] lock_rdata_0;
+
+    logic        lock_req_1;
+    logic        lock_write_1;
+    logic [31:0] lock_addr_1;
+    logic [31:0] lock_wdata_1;
+    logic        lock_ready_1;
+    logic        lock_resp_valid_1;
+    logic [31:0] lock_rdata_1;
+
+    // lock status for debug / verification
+    logic        lock_locked;
+    logic        lock_owner;
+
+
+    // --- core 0 ---
     cpu_top #(
         .RESET_VECTOR(CORE0_RESET_VECTOR)
     ) core0 (
@@ -95,7 +135,7 @@ module dual_core_top #(
         .retired_debug   ()
     );
 
-    // ─── core 1 ───
+    // --- core 1 ---
     cpu_top #(
         .RESET_VECTOR(CORE1_RESET_VECTOR)
     ) core1 (
@@ -122,7 +162,7 @@ module dual_core_top #(
         .retired_debug   ()
     );
 
-    // ─── imem arbiter ───
+    // --- imem arbiter ---
     imem_arbiter imem_arb (
         .clk              (clk),
         .rst              (rst),
@@ -143,13 +183,14 @@ module dual_core_top #(
         .imem_resp_data   (imem_resp_data_m)
     );
 
-    // ─── dmem arbiter ───
-    wire [31:0] core_id_rdata_0, core_id_rdata_1;
-    wire        core_id_valid_0, core_id_valid_1;
+    // --- dmem arbiter ---
+    logic [31:0] core_id_rdata_0, core_id_rdata_1;
+    logic        core_id_valid_0, core_id_valid_1;
 
     dmem_arbiter dmem_arb (
         .clk              (clk),
         .rst              (rst),
+
         .dmem_req_valid_0 (dmem_req_valid_0),
         .dmem_req_write_0 (dmem_req_write_0),
         .dmem_req_addr_0  (dmem_req_addr_0),
@@ -158,6 +199,7 @@ module dual_core_top #(
         .dmem_req_ready_0 (dmem_req_ready_0),
         .dmem_resp_valid_0(dmem_resp_valid_0),
         .dmem_resp_rdata_0(dmem_resp_rdata_0),
+
         .dmem_req_valid_1 (dmem_req_valid_1),
         .dmem_req_write_1 (dmem_req_write_1),
         .dmem_req_addr_1  (dmem_req_addr_1),
@@ -166,6 +208,7 @@ module dual_core_top #(
         .dmem_req_ready_1 (dmem_req_ready_1),
         .dmem_resp_valid_1(dmem_resp_valid_1),
         .dmem_resp_rdata_1(dmem_resp_rdata_1),
+
         .dmem_req_valid   (dmem_req_valid_m),
         .dmem_req_write   (dmem_req_write_m),
         .dmem_req_addr    (dmem_req_addr_m),
@@ -174,29 +217,75 @@ module dual_core_top #(
         .dmem_req_ready   (dmem_req_ready_m),
         .dmem_resp_valid  (dmem_resp_valid_m),
         .dmem_resp_rdata  (dmem_resp_rdata_m),
+
         .core_id_rdata_0  (core_id_rdata_0),
         .core_id_valid_0  (core_id_valid_0),
         .core_id_rdata_1  (core_id_rdata_1),
-        .core_id_valid_1  (core_id_valid_1)
+        .core_id_valid_1  (core_id_valid_1),
+
+        // MMIO � lock unit
+        .lock_req_0       (lock_req_0),
+        .lock_write_0     (lock_write_0),
+        .lock_addr_0      (lock_addr_0),
+        .lock_wdata_0     (lock_wdata_0),
+        .lock_ready_0     (lock_ready_0),
+        .lock_resp_valid_0(lock_resp_valid_0),
+        .lock_rdata_0     (lock_rdata_0),
+
+        .lock_req_1       (lock_req_1),
+        .lock_write_1     (lock_write_1),
+        .lock_addr_1      (lock_addr_1),
+        .lock_wdata_1     (lock_wdata_1),
+        .lock_ready_1     (lock_ready_1),
+        .lock_resp_valid_1(lock_resp_valid_1),
+        .lock_rdata_1     (lock_rdata_1),
+        .lock_locked      (lock_locked),
+        .lock_owner       (lock_owner)
     );
 
-   sim_memory #(
-        .MEM_WORDS(1024)
-    ) mem (
-        .clk             (clk),
-        .imem_req_valid  (imem_req_valid_m),
-        .imem_req_addr   (imem_req_addr_m),
-        .imem_req_ready  (imem_req_ready_m),
-        .imem_resp_valid (imem_resp_valid_m),
-        .imem_resp_data  (imem_resp_data_m),
-        .dmem_req_valid  (dmem_req_valid_m),
-        .dmem_req_write  (dmem_req_write_m),
-        .dmem_req_addr   (dmem_req_addr_m),
-        .dmem_req_wdata  (dmem_req_wdata_m),
-        .dmem_req_wstrb  (dmem_req_wstrb_m),
-        .dmem_req_ready  (dmem_req_ready_m),
-        .dmem_resp_valid (dmem_resp_valid_m),
-        .dmem_resp_rdata (dmem_resp_rdata_m)
+
+    // --- MMIO lock unit ---
+    // shared atomic spinlock at 0xF0000010
+    lock_unit #(
+        .LOCK_ADDR(32'hF000_0010)
+    ) lock0 (
+        .clk         (clk),
+        .rst         (rst),
+
+        .req_0       (lock_req_0),
+        .write_0     (lock_write_0),
+        .addr_0      (lock_addr_0),
+        .wdata_0     (lock_wdata_0),
+        .ready_0     (lock_ready_0),
+        .resp_valid_0(lock_resp_valid_0),
+        .rdata_0     (lock_rdata_0),
+
+        .req_1       (lock_req_1),
+        .write_1     (lock_write_1),
+        .addr_1      (lock_addr_1),
+        .wdata_1     (lock_wdata_1),
+        .ready_1     (lock_ready_1),
+        .resp_valid_1(lock_resp_valid_1),
+        .rdata_1     (lock_rdata_1),
+
+        .locked      (lock_locked),
+        .owner       (lock_owner)
     );
+
+
+    assign imem_req_valid = imem_req_valid_m;
+    assign imem_req_addr = imem_req_addr_m;
+    assign imem_req_ready_m = imem_req_ready;
+    assign imem_resp_valid_m = imem_resp_valid;
+    assign imem_resp_data_m = imem_resp_data;
+
+    assign dmem_req_valid = dmem_req_valid_m;
+    assign dmem_req_write = dmem_req_write_m;
+    assign dmem_req_addr = dmem_req_addr_m;
+    assign dmem_req_wdata = dmem_req_wdata_m;
+    assign dmem_req_wstrb = dmem_req_wstrb_m;
+    assign dmem_req_ready_m = dmem_req_ready;
+    assign dmem_resp_valid_m = dmem_resp_valid;
+    assign dmem_resp_rdata_m = dmem_resp_rdata;
 
 endmodule
