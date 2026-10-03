@@ -214,13 +214,13 @@ module dmem_arbiter (
                                bus_cont_req_0    ? {2{bus_contention_count}} :
                                lock_req_detect_0 ? {2{lock_rdata_0}} :
                                (mem_response_valid && !mem_response_owner) ? mem_response_data :
-                                                   32'b0;
+                                                   64'b0;
 
     assign dmem_resp_rdata_1 = core_id_req_1     ? {2{core_id_rdata_1}} :
                                bus_cont_req_1    ? {2{bus_contention_count}} :
                                lock_req_detect_1 ? {2{lock_rdata_1}} :
                                (mem_response_valid && mem_response_owner) ? mem_response_data :
-                                                   32'b0;
+                                                   64'b0;
 
 
     // update round robin after each completed memory transaction

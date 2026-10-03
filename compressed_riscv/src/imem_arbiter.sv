@@ -60,8 +60,8 @@ module imem_arbiter (
     // the accepted request rather than the core requesting in this cycle.
     assign imem_resp_valid_0 = response_pending && !response_owner ? imem_resp_valid : 1'b0;
     assign imem_resp_valid_1 = response_pending &&  response_owner ? imem_resp_valid : 1'b0;
-    assign imem_resp_data_0  = (!response_owner) ? imem_resp_data : 32'b0;
-    assign imem_resp_data_1  = ( response_owner) ? imem_resp_data : 32'b0;
+    assign imem_resp_data_0  = (!response_owner) ? imem_resp_data : 64'b0;
+    assign imem_resp_data_1  = ( response_owner) ? imem_resp_data : 64'b0;
 
     // update round robin priority after each completed transaction
     always_ff @(posedge clk or posedge rst) begin
