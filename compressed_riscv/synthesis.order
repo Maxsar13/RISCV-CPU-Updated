@@ -27,3 +27,5 @@ i<>.\src\dmc.sv
 i<>.\src\i_dmc.sv
 i<>.\src\memory_controller_tb.sv
 i<>.\src\lock_unit.sv
+i<>.\src\dmem_bram.sv
+i<>.\src\icache.sv

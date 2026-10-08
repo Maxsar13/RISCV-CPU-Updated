@@ -2,31 +2,39 @@ module memory_controller(
 	input logic clk,
 	input logic rst,
 	
-	//IMEM arbiter to MC
+	//Arbiter (IMEM) to MC 
+	input logic i_req_core, //Which core Icache was granted
 	input logic i_req_valid,
 	input logic [31:0] i_req_addr,
-	output logic i_req_ready,
-	output logic i_resp_valid,
-	output logic [63:0] i_resp_data,
+
 	
-	//DMEM arbiter to MC 
+	//Arbiter (DMEM) to MC 
+	input logic d_req_core, //Which core DCache was granted
 	input logic d_req_valid,
 	input logic d_req_write,
 	input logic [31:0] d_req_addr,	 
 	input logic [31:0] d_req_wdata,
 	input logic [3:0] d_req_wstrb,
+	
+	
+	
+	//MC to Cache
+	output logic i_req_ready, 
 	output logic d_req_ready,
-	output logic d_resp_valid, 
-	output logic [63:0] d_resp_data,
+	output logic ic0_resp_valid, 	//4 Caches, 4 valids as all caches will see the same data wire, but only whoever is valid will take it
+	output logic ic1_resp_valid,
+	output logic dc0_resp_valid,
+	output logic dc1_resp_valid,
+	output logic [63:0] resp_data,
 	
 	
-	//Bridge to MC
+	//Memory to MC
 	input logic mem_req_ready,
 	input logic mem_resp_valid,
 	input logic [63:0] mem_resp_data,
 	
 	
-	//DMC to Bridge
+	//DMC to memory
 	output logic mem_req_valid,
 	output logic mem_req_write,
 	output logic [31:0] mem_req_addr,
@@ -51,7 +59,8 @@ module memory_controller(
 	logic [3:0] req_wstrb_q; //Which 32 bit word to actually write. Whole word, upper or lower half, or by byte. 
 	
 	logic rr; //Making a round robin for imem and dmem. 0 = imem, 1 = dmem
-	logic sel_q;	//Whoever owns the request
+	logic sel_q;	//Whoever owns the request 
+	logic core_q; 	//Remembering the core. 
 	
 	
 	//Assigning priorities by looking at req_valid in inputs, as well as round robin variable
@@ -76,7 +85,8 @@ module memory_controller(
 	always_ff @(posedge clk or posedge rst) begin
 		if(rst)
 			begin
-				sel_q <= 0;
+				sel_q <= 0;	
+				core_q <= 0;
 				rr <= 0;
 				req_addr_q <= 32'd0;
 				req_wdata_q <= 32'd0;
@@ -84,7 +94,8 @@ module memory_controller(
 			end
 		else if(state == IDLE_STATE && (grant_i || grant_d))  				  //This is like a place holder for the incoming write values. 
 			begin
-				sel_q <= grant_d;		   //Since dmem is 1, if its 0 then Imem has priority
+				sel_q <= grant_d;		   //Since dmem is 1, if its 0 then Imem has priority  
+				core_q <= grant_d ? d_req_core : i_req_core; //Core tag arrives on cycle the request is accepted, but respoinse comes few cycle later.
 				req_addr_q <= grant_d ? d_req_addr : i_req_addr;							  
 				req_wdata_q	<= d_req_wdata;
 				req_wstrb_q	<= d_req_wstrb;
@@ -138,10 +149,6 @@ module memory_controller(
 		mem_req_wstrb = 4'd0; 
 		i_req_ready = 1'b0;
 		d_req_ready = 1'b0;
-		i_resp_valid = 1'b0;
-		d_resp_valid = 1'b0;
-		i_resp_data = 64'd0;
-		d_resp_data = 64'd0;
 		
 		//Mem_req_valid will now only set when a request isnt accepted
 		
@@ -160,10 +167,11 @@ module memory_controller(
 			end
 			READ_DATA: 
 			begin	
-				i_resp_valid = mem_resp_valid && !sel_q;
-				d_resp_valid = mem_resp_valid && sel_q;
-				i_resp_data = mem_resp_data;			   //Data gets sent to both, but resp_valid decides what cache actually recieves it
-				d_resp_data = mem_resp_data;
+				ic0_resp_valid = mem_resp_valid && !sel_q && !core_q;		 //00 = icache0
+				ic1_resp_valid = mem_resp_valid && !sel_q && core_q;		 //01 = icache1
+				dc0_resp_valid = mem_resp_valid && sel_q && !core_q;		 //10 = dcache0
+				dc1_resp_valid = mem_resp_valid && sel_q && core_q;			 //11 = dcache1
+				resp_data = mem_resp_data; //Only one shared bus now
 			end	
 			WRITE_WAIT:
 			begin 

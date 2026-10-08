@@ -4,7 +4,9 @@
 // round-robin between two cores
 // single dmem port
 // handles MMIO address detection
-module dmem_arbiter (
+module dmem_arbiter #(
+	parameter DIRECT_RESP = 0
+	)(
     input  logic        clk,
     input  logic        rst,
 
@@ -63,7 +65,9 @@ module dmem_arbiter (
     input  logic        lock_resp_valid_1,
     input  logic [31:0] lock_rdata_1,
     input  logic        lock_locked,
-    input  logic        lock_owner
+    input  logic        lock_owner,
+	
+	output logic dmem_req_core			//Tells which core requests
 );
 
     // MMIO address detection
@@ -98,7 +102,9 @@ module dmem_arbiter (
 	logic grant_1;
     assign grant_1 = lock_locked ? (lock_owner == 1'b1 && mem_req_valid_1 && !mem_response_pending) :
                      (!mem_response_pending && mem_req_valid_1 &&
-                      (!mem_req_valid_0 || rr_priority));
+					 (!mem_req_valid_0 || rr_priority)); 
+					 
+	assign dmem_req_core = grant_1; //If 1, grant core 1, if 0, grant core 0
 
     // forward selected core to memory
     assign dmem_req_valid = grant_0 ? dmem_req_valid_0 :
@@ -244,7 +250,7 @@ module dmem_arbiter (
                     mem_response_data <= dmem_resp_rdata;
                 end
             end
-            else if (dmem_req_valid && dmem_req_ready && !dmem_req_write) begin
+            else if (!DIRECT_RESP && dmem_req_valid && dmem_req_ready && !dmem_req_write) begin
                 mem_response_pending <= 1'b1;
                 mem_response_owner <= grant_1;
             end

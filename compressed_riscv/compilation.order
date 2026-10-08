@@ -26,3 +26,5 @@
 .\src\memory_controller.sv
 .\src\memory_controller_tb.sv
 .\src\lock_unit.sv
+.\src\dmem_bram.sv
+.\src\icache.sv

@@ -3,7 +3,9 @@
 // instruction memory arbiter
 // round-robin between two cores
 // single imem port
-module imem_arbiter (
+module imem_arbiter #( 
+	parameter DIRECT_RESP = 0
+	)(
     input  logic        clk,
     input  logic        rst,
 
@@ -26,7 +28,9 @@ module imem_arbiter (
     output logic [31:0] imem_req_addr,
     input  logic        imem_req_ready,
     input  logic        imem_resp_valid,
-    input  logic [63:0] imem_resp_data
+    input  logic [63:0] imem_resp_data, 
+	
+	output logic imem_req_core //Telling memory controller which core was granted
 );
 
     // round robin state
@@ -41,7 +45,10 @@ module imem_arbiter (
     logic grant_0;
     assign grant_0 = imem_req_valid_0 && (!imem_req_valid_1 || !rr_priority);
     logic grant_1;
-    assign grant_1 = imem_req_valid_1 && (!imem_req_valid_0 ||  rr_priority);
+    assign grant_1 = imem_req_valid_1 && (!imem_req_valid_0 ||  rr_priority); 
+	
+	assign imem_req_core = grant_1;	//If 1, than core 1 is granted, if 0, then 0 is granted
+	
 
     // forward selected core's request to memory
     assign imem_req_valid = grant_0 ? imem_req_valid_0 :
@@ -69,8 +76,12 @@ module imem_arbiter (
             rr_priority <= 1'b0;
             response_pending <= 1'b0;
             response_owner <= 1'b0;
-        end else begin
-            if (!response_pending && imem_req_valid && imem_req_ready) begin
+        end else begin	 
+		
+		if(DIRECT_RESP && imem_req_valid && imem_req_ready)
+				rr_priority <= grant_0 ? 1'b1 : 1'b0; //Flips on every accepted request
+		
+		if (!DIRECT_RESP && !response_pending && imem_req_valid && imem_req_ready) begin 
                 response_pending <= 1'b1;
                 response_owner <= grant_1;
             end else if (response_pending && imem_resp_valid) begin
