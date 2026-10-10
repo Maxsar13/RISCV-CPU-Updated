@@ -5,7 +5,7 @@
 // single dmem port
 // handles MMIO address detection
 module dmem_arbiter #(
-	parameter DIRECT_RESP = 0
+	parameter DIRECT_RESP = 1 //Used if we want memory controller to send back to cache or arbiter to cache. 0: ARB -> Cache. 1:MC -> Cache
 	)(
     input  logic        clk,
     input  logic        rst,

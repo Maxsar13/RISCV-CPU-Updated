@@ -169,7 +169,7 @@ module memory_controller(
 			begin	
 				ic0_resp_valid = mem_resp_valid && !sel_q && !core_q;		 //00 = icache0
 				ic1_resp_valid = mem_resp_valid && !sel_q && core_q;		 //01 = icache1
-				dc0_resp_valid = mem_resp_valid && sel_q && !core_q;		 //10 = dcache0
+				dc0_resp_valid = mem_resp_valid && sel_q && !core_q;		 //10 = dcache0	   //Only one resp is valid with this
 				dc1_resp_valid = mem_resp_valid && sel_q && core_q;			 //11 = dcache1
 				resp_data = mem_resp_data; //Only one shared bus now
 			end	
